@@ -20,7 +20,12 @@ for(const folder of functionFolders){
         .readdirSync(`./src/functions/${folder}`)
         .filter((file) => file.endsWith(".js"));
     for(const file of functionFiles) 
-        require(`./functions/${folder}/${file}`)(client);
+        if(folder == "handlers"){
+            require(`./functions/${folder}/${file}`)(client);
+        }
+        else{
+            require(`./functions/${folder}/${file}`);
+        }
 }
 
 client.handleEvents();

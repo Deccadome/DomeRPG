@@ -1,2 +1,2 @@
 # Hide environment variables (not sharing tokens)
-src/.env
+.env

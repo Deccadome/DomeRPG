@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
+const Tools = require('../../functions/tools/tools.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -13,5 +14,8 @@ module.exports = {
         await interaction.editReply({
             content: newMessage
         });
+
+        test = "Help Me";
+        console.log(Tools.formatSlug(test));
     }
 }
