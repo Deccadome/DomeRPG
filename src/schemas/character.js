@@ -6,7 +6,7 @@ const characterSchema = new Schema({
     charSlug: {type: String, required: true}, // first-last
     class: String,
     active: {type: Boolean, required: true},
-    goldBalance: {type: Number, required: true, "default": 0 },
+    goldBalance: {type: Number, required: true, default: 0 },
     weapons: [{ 
         itemId: { type: Schema.Types.ObjectId, ref: 'Weapon', required: true }, 
         name: String,
