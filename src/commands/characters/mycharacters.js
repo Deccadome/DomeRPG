@@ -24,7 +24,8 @@ module.exports = {
         else{ returnString = `${numCharacters} characters found.\n\n` + returnString; }
         
         await interaction.reply({
-            content: returnString
+            content: returnString,
+            ephemeral: true
         });
     }
 }

@@ -42,8 +42,9 @@ module.exports = {
             const newActive = await Character.findOne({ userId: interaction.user.id, charSlug: optionSlug });
             if(newActive.active == true){
                 await interaction.reply({
-                    content: `**${newActive.displayName}** is already your primary character.`}
-                );
+                    content: `**${newActive.displayName}** is already your primary character.`,
+                    ephemeral: true
+                });
             } else {
                 const curActive = await Character.findOne({ userId: interaction.user.id, active: true });
                 if(curActive){
@@ -52,10 +53,16 @@ module.exports = {
                 }
                 newActive.active = true;
                 newActive.save().catch(console.error);
-                await interaction.reply({ content: `**${newActive.displayName}** was set as your primary character.`});
+                await interaction.reply({ 
+                    content: `**${newActive.displayName}** was set as your primary character.`,
+                    ephemeral: true
+                });
             }
         } else{
-            await interaction.reply({ content: `You do not have a character with that name.`});
+            await interaction.reply({ 
+                content: `You do not have a character with that name.`,
+                ephemeral: true
+            });
         }
     },
 }
