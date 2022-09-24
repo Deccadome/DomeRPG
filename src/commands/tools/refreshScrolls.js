@@ -35,7 +35,8 @@ module.exports = {
         console.log(`9th level scroll loaded.`);
 
         await interaction.reply({
-            content: `Scrolls reloaded.`
+            content: `Scrolls reloaded.`,
+            ephemeral: true
         });
 
     }
