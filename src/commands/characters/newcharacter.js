@@ -1,4 +1,5 @@
-const Player = require('../../schemas/player');
+const Character = require('../../schemas/character');
+const Tools = require('../../functions/tools/tools.js')
 const { SlashCommandBuilder } = require('discord.js');
 const mongoose = require('mongoose');
 
@@ -20,33 +21,36 @@ module.exports = {
         ),
     async execute(interaction, client) {
         const name = interaction.options.getString('name');
+        const slug = Tools.formatSlug(name);
         const charClass = interaction.options.getString('class');
-        let characterProfile = await Player.findOne({ userId: interaction.user.id, characterLower: name.toLowerCase()});
+        let characterProfile = await Character.findOne({ userId: interaction.user.id, charSlug: slug});
         if(!characterProfile) {
-            const cursor = Player.find({ userId: interaction.user.id }).cursor();
-            for(let character = await cursor.next(); character != null; character = await cursor.next()){
-                character.characterActive = false;
-                await character.save().catch(console.error);
+            const activeChar = await Character.findOne({ userId: interaction.user.id, active: true })
+            if(activeChar){
+                activeChar.active = false;
+                await activeChar.save().catch(console.error);
             }
 
-            characterProfile = await new Player({
+            characterProfile = await new Character({
                 _id: mongoose.Types.ObjectId(),
                 userId: interaction.user.id,
-                characterName: name,
-                characterLower: name.toLowerCase(),
-                characterClass: charClass,
-                characterActive: true
+                displayName: name,
+                charSlug: slug,
+                class: charClass,
+                active: true
             });
 
             await characterProfile.save().catch(console.error);
             await interaction.reply({
-                content: `New character **${characterProfile.characterName}** created and set *Active*.`
+                content: `New character **${characterProfile.displayName}** created and set as your *primary* character.`,
+                ephemeral: true
             });
 
             //console.log(characterProfile);
         } else{
             await interaction.reply({
-                content: `You already have a character with the name **${characterProfile.characterName}**`
+                content: `You already have a character with the name **${characterProfile.name}**`,
+                ephemeral: true
             });
             //console.log(characterProfile);
         }

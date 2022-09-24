@@ -1,4 +1,4 @@
-const Player = require('../../schemas/player');
+const Character = require('../../schemas/character');
 const { SlashCommandBuilder } = require('discord.js');
 const mongoose = require('mongoose');
 
@@ -7,14 +7,14 @@ module.exports = {
         .setName('mycharacters')
         .setDescription('Shows all of your existing characters.'),
     async execute(interaction, client) {
-        const cursor = Player.find({ userId: interaction.user.id }).cursor();
+        const cursor = Character.find({ userId: interaction.user.id }).cursor();
         var numCharacters = 0;
         var returnString = ``;
         for(let character = await cursor.next(); character != null; character = await cursor.next()){
-            charName = character.characterName;
-            charClass = character.characterClass;
-            charStatus = 'Active';
-            if(character.characterActive == false) charStatus = 'Inactive';
+            charName = character.displayName;
+            charClass = character.class;
+            charStatus = 'Primary';
+            if(character.active == false) charStatus = 'Inactive';
             returnString += `Name: **${charName}**\nClass: ${charClass}\nStatus: _${charStatus}_\n\n`;
             console.log(character);
             numCharacters++;
