@@ -15,6 +15,12 @@ module.exports = {
         )
         .addStringOption(option => 
             option
+                .setName('race')
+                .setDescription(`Character's race`)
+                .setRequired(true)
+        )
+        .addStringOption(option => 
+            option
                 .setName('class')
                 .setDescription(`Character's class`)
                 .setRequired(true)
@@ -22,6 +28,7 @@ module.exports = {
     async execute(interaction, client) {
         const name = interaction.options.getString('name');
         const slug = Tools.formatSlug(name);
+        const charRace = interaction.options.getString('race');
         const charClass = interaction.options.getString('class');
         let characterProfile = await Character.findOne({ userId: interaction.user.id, charSlug: slug});
         if(!characterProfile) {
@@ -36,6 +43,7 @@ module.exports = {
                 userId: interaction.user.id,
                 displayName: name,
                 charSlug: slug,
+                race: charRace,
                 class: charClass,
                 active: true
             });

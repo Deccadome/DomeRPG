@@ -4,6 +4,8 @@ const characterSchema = new Schema({
     userId: {type: String, required: true},
     displayName: {type: String, required: true},
     charSlug: {type: String, required: true}, // first-last
+    race: {type: String, required: true},
+    subRace: String,
     class: {type: String, required: true},
     active: {type: Boolean, required: true},
     goldBalance: {type: Number, required: true, "default": 0 },

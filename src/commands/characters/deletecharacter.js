@@ -63,7 +63,10 @@ module.exports = {
             });
             
         } else{
-            await interaction.reply({ content: `You don't have a character with that name.`});
+            await interaction.reply({ 
+                content: `You don't have a character with that name.`,
+                ephemeral: true
+            });
         }
     },
 }

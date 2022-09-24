@@ -23,9 +23,9 @@ for(const folder of functionFolders){
         if(folder == "handlers"){
             require(`./functions/${folder}/${file}`)(client);
         }
-        else{
+        /*else{
             require(`./functions/${folder}/${file}`);
-        }
+        }*/
 }
 
 client.handleEvents();
