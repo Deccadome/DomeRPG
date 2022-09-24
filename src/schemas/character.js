@@ -20,6 +20,7 @@ const characterSchema = new Schema({
     }],
     wands: [{ 
         itemId: { type: Schema.Types.ObjectId, ref: 'Wand', required: true }, 
+        usesRemaining: Number,
         name: String,
         notes: String 
     }],
