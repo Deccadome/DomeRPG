@@ -1,10 +1,10 @@
 const { Schema, model } = require('mongoose');
 const characterSchema = new Schema({
     _id: Schema.Types.ObjectId,
-    userId: String,
+    userId: {type: String, required: true},
     displayName: {type: String, required: true},
     charSlug: {type: String, required: true}, // first-last
-    class: String,
+    class: {type: String, required: true},
     active: {type: Boolean, required: true},
     goldBalance: {type: Number, required: true, "default": 0 },
     weapons: [{ 

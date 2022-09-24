@@ -19,6 +19,7 @@ module.exports = {
             }));
 
         await interaction.reply({
+            content: 'Are you sure?',
             components: [new ActionRowBuilder().addComponents(menu)]
         });
     }
