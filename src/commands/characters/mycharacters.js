@@ -12,10 +12,11 @@ module.exports = {
         var returnString = ``;
         for(let character = await cursor.next(); character != null; character = await cursor.next()){
             charName = character.displayName;
+            charRace = character.race;
             charClass = character.class;
             charStatus = 'Primary';
             if(character.active == false) charStatus = 'Inactive';
-            returnString += `Name: **${charName}**\nClass: ${charClass}\nStatus: _${charStatus}_\n\n`;
+            returnString += `Name: **${charName}**\nRace: ${charRace}\nClass: ${charClass}\nStatus: _${charStatus}_\n\n`;
             console.log(character);
             numCharacters++;
         }
