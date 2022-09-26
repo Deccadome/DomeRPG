@@ -5,6 +5,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const mongoose = require('mongoose');
 const Scroll = require('../../schemas/scroll');
+const Weapon = require('../../schemas/weapon');
 
 module.exports = {
     // Format character name (or any string) to replace spaces with '-' and make all letters lowercase
@@ -12,7 +13,7 @@ module.exports = {
         return input.replace(/\s+/g, '-').toLowerCase();
     },
 
-    // Adds a scroll to respective table
+    // Adds a scroll to collection
     async addScroll(level, dc, attackBonus, underLevelCastDC){
         scrollProfile = await new Scroll({
             _id: mongoose.Types.ObjectId(),
@@ -22,5 +23,48 @@ module.exports = {
             underLevelCastDC: underLevelCastDC
         });
         await scrollProfile.save().catch(console.error);
+    },
+
+    // Adds a weapon to collection
+    async addWeapon(name, attackType, reach, rangeLower, rangeUpper, damage, damageType, weight, rarity, description, properties){
+        slug = name.replace(/\s+/g, '-').toLowerCase();
+        //console.log(`Name: ${name}, Slug: ${slug}`);
+        weaponExisting = await Weapon.findOne({ slug: slug });
+        if(!weaponExisting){
+            weaponProfile = await new Weapon({
+                _id: mongoose.Types.ObjectId(),
+                name: name,
+                slug: slug,
+                attackType: attackType,
+                damage: damage,
+                damageType: damageType,
+                weight: weight,
+                rarity: rarity,
+                description: description,
+            });
+            if(reach){ weaponProfile.reach = reach; }
+            if(rangeLower){ weaponProfile.rangeLower = rangeLower; }
+            if(rangeUpper){ weaponProfile.rangeUpper = rangeUpper; }
+            if(properties){ weaponProfile.properties = properties; }
+
+            await weaponProfile.save().catch(console.error);
+        }
+        else{
+            weaponExisting.name = name;
+            weaponExisting.slug = slug;
+            weaponExisting.attackType = attackType;
+            weaponExisting.damage = damage;
+            weaponExisting.damageType = damageType;
+            weaponExisting.weight = weight;
+            weaponExisting.rarity = rarity;
+            weaponExisting.description = description;
+            if(reach){ weaponExisting.reach = reach; } else{ weaponExisting.reach = undefined; }
+            if(rangeLower){ weaponExisting.rangeLower = rangeLower; } else{ weaponExisting.rangeLower = undefined; }
+            if(rangeUpper){ weaponExisting.rangeUpper = rangeUpper; } else{ weaponExisting.rangeUpper = undefined; }
+            if(properties){ weaponExisting.properties = properties; } else{ weaponExisting.properties = undefined; }
+
+            await weaponExisting.save().catch(console.error);
+        }
+
     },
 }

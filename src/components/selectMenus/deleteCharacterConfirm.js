@@ -1,5 +1,6 @@
 const Character = require('../../schemas/character');
-const Tools = require('../../functions/tools/tools.js')
+const Tools = require('../../functions/tools/tools.js');
+const { messageLink } = require('discord.js');
 
 module.exports = {
     data: {
@@ -7,19 +8,19 @@ module.exports = {
     },
     async execute(interaction, client) {
         confirmDel = await interaction.values[0];
-        console.log(confirmDel);
+        //console.log(confirmDel);
         if(confirmDel != 'no') {
             option = confirmDel;
             optionSlug = Tools.formatSlug(option);
             try {
                 await Character.findOneAndDelete({ userId: interaction.user.id, charSlug: optionSlug });
-                await interaction.reply({ content: `Character ${option} successfully deleted.`, ephemeral: true })
+                await interaction.update({ content: `Character ${option} successfully deleted.`, components: []})
             } catch (error) {
-                await interaction.reply({ content: `Unable to delete ${confirmDel}.`, ephemeral: true});
+                await interaction.update({ content: `Unable to delete ${confirmDel}.`, components: []});
                 console.error(error);
             }
         } else{
-            await interaction.reply({ content: `Operation cancelled.`, ephemeral: true});
+            await interaction.update({ content: `Operation cancelled.`, components: []});
         }
     }
 }
