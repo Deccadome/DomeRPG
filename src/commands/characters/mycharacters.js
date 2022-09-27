@@ -13,9 +13,10 @@ module.exports = {
         for(let character = await cursor.next(); character != null; character = await cursor.next()){
             charName = character.displayName;
             charClass = character.class;
+            charRace = character.race;
             charStatus = 'Primary';
             if(character.active == false) charStatus = 'Inactive';
-            returnString += `Name: **${charName}**\nClass: ${charClass}\nStatus: _${charStatus}_\n\n`;
+            returnString += `Name: **${charName}**\nRace: ${charRace}\nClass: ${charClass}\nStatus: _${charStatus}_\n\n`;
             //console.log(character);
             numCharacters++;
         }
