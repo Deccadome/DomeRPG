@@ -18,7 +18,7 @@ module.exports = {
             .addFields([
                 {
                     name: `Gold`,
-                    value: `${goldBalance}g`,
+                    value: `${goldBalance}gp`,
                 }
         ]);
         if(curCharacter.weapons.length){
