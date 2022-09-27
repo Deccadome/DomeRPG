@@ -71,10 +71,10 @@ module.exports = {
                     id = 0 + numExisting;
                     //console.log(curCharacter);
                     if(customName){
-                        weaponToAdd = {weaponID: newWeapon.id, localId: id, customName: customName };
+                        weaponToAdd = {weaponID: newWeapon._id, localId: id, customName: customName };
                         outputName = `${customName} (${weaponName})`;
                     }
-                    else weaponToAdd = {weaponID: newWeapon.id, localId: id}; 
+                    else weaponToAdd = {weaponID: newWeapon._id, localId: id}; 
                     await curCharacter.weapons.push(weaponToAdd);
                     /* await curCharacter.weapons.push({
                         weaponID: newWeapon.id,

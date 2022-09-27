@@ -10,7 +10,7 @@ module.exports = {
         .setDescription('Refreshes available weapon items.'),
     
     async execute(interaction, client) {
-        await Weapon.collection.drop(); // deletes all scrolls in the table
+        //await Weapon.collection.drop(); // deletes all scrolls in the table
 
         // addWeapon(name, attackType, reach, rangeLower, rangeUpper, damage, damageType, weight, rarity, description, [properties])
         await addWeapon('Battleaxe', 'Melee', 5, 0, 0, '1d8', 'Slashing', 4, 'Common', 'Proficiency with a battleaxe allows you to add your proficiency bonus to the attack roll for any attack you make with it.', ['Versatile (1d10)']);
