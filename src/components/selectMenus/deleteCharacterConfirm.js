@@ -14,7 +14,7 @@ module.exports = {
             optionSlug = Tools.formatSlug(option);
             try {
                 await Character.findOneAndDelete({ userId: interaction.user.id, charSlug: optionSlug });
-                await interaction.update({ content: `Character ${option} successfully deleted.`, components: []})
+                await interaction.update({ content: `Character **${option}** successfully deleted.`, components: []})
             } catch (error) {
                 await interaction.update({ content: `Unable to delete ${confirmDel}.`, components: []});
                 console.error(error);

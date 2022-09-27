@@ -26,7 +26,7 @@ module.exports = {
     },
 
     // Adds a weapon to collection
-    async addWeapon(name, attackType, reach, rangeLower, rangeUpper, damage, damageType, weight, rarity, description, properties){
+    async addWeapon(name, attackType, reach, rangeLower, rangeUpper, damage, damageType, weight, rarity, cost, description, properties){
         slug = name.replace(/\s+/g, '-').toLowerCase();
         //console.log(`Name: ${name}, Slug: ${slug}`);
         weaponExisting = await Weapon.findOne({ slug: slug });
@@ -46,6 +46,7 @@ module.exports = {
             if(rangeLower){ weaponProfile.rangeLower = rangeLower; }
             if(rangeUpper){ weaponProfile.rangeUpper = rangeUpper; }
             if(properties){ weaponProfile.properties = properties; }
+            if(cost){ weaponProfile.cost = cost; }
 
             await weaponProfile.save().catch(console.error);
         }
@@ -62,6 +63,7 @@ module.exports = {
             if(rangeLower){ weaponExisting.rangeLower = rangeLower; } else{ weaponExisting.rangeLower = undefined; }
             if(rangeUpper){ weaponExisting.rangeUpper = rangeUpper; } else{ weaponExisting.rangeUpper = undefined; }
             if(properties){ weaponExisting.properties = properties; } else{ weaponExisting.properties = undefined; }
+            if(cost){ weaponExisting.cost = cost; } else{ weaponExisting.cost = undefined; }
 
             await weaponExisting.save().catch(console.error);
         }
