@@ -12,8 +12,8 @@ module.exports = {
     async execute(interaction, client) {
         await Scroll.collection.drop(); // deletes all scrolls in the table
 
-        // addScroll(level, savingThrowDC, attackBonus, underLevelCastDC)
-        addSpell(0, 13, 5, 0);
+        // addSpell(name, level, spellClass, castingTime, components, description, school, savingThrowDC, saveThrowType, damage, range, duration)
+        await addSpell(1, 13, 5, 0);
         console.log(`Cantrip spell loaded.`);
         
 
