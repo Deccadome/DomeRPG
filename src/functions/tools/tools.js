@@ -5,6 +5,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const mongoose = require('mongoose');
 const Scroll = require('../../schemas/scroll');
+const Spell = require('../../schemas/spell');
 
 module.exports = {
     // Format character name (or any string) to replace spaces with '-' and make all letters lowercase
@@ -22,5 +23,23 @@ module.exports = {
             underLevelCastDC: underLevelCastDC
         });
         await scrollProfile.save().catch(console.error);
+    },
+
+    // Adds a spell to respective table
+    async addSpell(level, castingTime, components, description, school){
+        spellProfile = await new Spell({
+            _id: mongoose.Types.ObjectId(),
+            level: level,
+            castingTime: castingTime,
+            components: components,
+            description: description,
+            school: school,
+            savingThrowDC: savingThrowDc,
+            damage: damage,
+            range: range,
+            duration: duration,
+            savingThrowType: savingThrowType
+        });
+        await spellProfile.save().catch(console.error);
     },
 }
