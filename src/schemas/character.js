@@ -10,12 +10,13 @@ const characterSchema = new Schema({
     active: {type: Boolean, required: true},
     goldBalance: {type: Number, required: true, "default": 0 },
     weapons: [{ 
-        itemId: { type: Schema.Types.ObjectId, ref: 'Weapon', required: true }, 
-        name: String,
+        weaponID: { type: Schema.Types.ObjectId, ref: 'Weapon', required: true },
+        localId: Number, 
+        customName: String,
         notes: String 
     }],
     armor: [{ 
-        itemId: { type: Schema.Types.ObjectId, ref: 'Armor', required: true }, 
+        name: { type: String, ref: 'Armor', required: true }, 
         notes: String, 
     }],
     wands: [{ 
@@ -25,16 +26,16 @@ const characterSchema = new Schema({
         notes: String 
     }],
     scrolls: [{ 
-        scrollId: { type: Schema.Types.ObjectId, ref: 'Scroll', required: true }, 
-        spellId: {type: Schema.Types.ObjectId, ref: 'Spell', required: true },
+        scrollLevel: { type: Number, ref: 'Scroll', required: true }, 
+        spellName: {type: String, ref: 'Spell', required: true },
         notes: String 
     }],
     potions: [{ 
-        itemId: { type: Schema.Types.ObjectId, ref: 'Potion' }, 
+        itemId: { type: String, ref: 'Potion' }, 
         notes: String 
     }],
     misc: [{ 
-        itemId: { type: Schema.Types.ObjectId, ref: 'Misc' }, // optional for pre-added miscellaneous items
+        itemName: { type: String, ref: 'Misc' }, // optional for pre-added miscellaneous items
         name: String, 
         notes: String 
     }],

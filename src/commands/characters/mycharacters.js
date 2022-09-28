@@ -8,12 +8,13 @@ module.exports = {
         .setDescription('Shows all of your existing characters.'),
     async execute(interaction, client) {
         const cursor = Character.find({ userId: interaction.user.id }).cursor();
-        var numCharacters = 0;
-        var returnString = ``;
+        numCharacters = 0;
+        returnString = ``;
         for(let character = await cursor.next(); character != null; character = await cursor.next()){
             charName = character.displayName;
             charRace = character.race;
             charClass = character.class;
+            charRace = character.race;
             charStatus = 'Primary';
             if(character.active == false) charStatus = 'Inactive';
             returnString += `Name: **${charName}**\nRace: ${charRace}\nClass: ${charClass}\nStatus: _${charStatus}_\n\n`;

@@ -18,12 +18,56 @@ module.exports = {
                 .setName('race')
                 .setDescription(`Character's race`)
                 .setRequired(true)
+                .addChoices(
+                    { name: 'Aarakocra', value: 'Aarakocra'},
+                    { name: 'Centaur', value: 'Centaur'},
+                    { name: 'Dragonborn', value: 'Dragonborn'},
+                    { name: 'Dwarf (Hill)', value: 'Dwarf (Hill)'},
+                    { name: 'Dwarf (Mountain)', value: 'Dwarf (Mountain)'},
+                    { name: 'Elf (High)', value: 'Elf (High)'},
+                    { name: 'Elf (Wood)', value: 'Elf (Wood)'},
+                    { name: 'Elf (Eladrin)', value: 'Elf (Eladrin)'},
+                    { name: 'Genasi (Air)', value: 'Genasi (Air)'},
+                    { name: 'Genasi (Earth)', value: 'Genasi (Earth)'},
+                    { name: 'Genasi (Fire)', value: 'Genasi (Fire)'},
+                    { name: 'Genasi (Water)', value: 'Genasi (Water)'},
+                    { name: 'Gnome (Rock)', value: 'Gnome (Rock)'},
+                    { name: 'Gnome (Deep)', value: 'Gnome (Deep)'},
+                    { name: 'Goblin', value: 'Goblin'},
+                    { name: 'Goliath', value: 'Goliath'},
+                    { name: 'Half-Elf', value: 'Half-Elf'},
+                    { name: 'Half-Orc', value: 'Half-Orc'},
+                    { name: 'Halfling (Lightfoot)', value: 'Halfling (Lightfoot)'},
+                    { name: 'Halfling (Stout)', value: 'Halfling (Stout)'},
+                    { name: 'Human', value: 'Human'},
+                    { name: 'Human (Variant)', value: 'Human (Variant)'},
+                    { name: 'Loxodon', value: 'Loxodon'},
+                    { name: 'Minotaur', value: 'Minotaur'},
+                    //{ name: 'Simic Hybrid', value: 'Simic Hybrid'},
+                    { name: 'Tiefling', value: 'Tiefling'},
+                    //{ name: 'Variant Aasimar', value: 'Variant Aasimar'},
+                    //{ name: 'Vedalken', value: 'Vedalken'}
+                )
         )
         .addStringOption(option => 
             option
                 .setName('class')
                 .setDescription(`Character's class`)
                 .setRequired(true)
+                .addChoices(
+                    { name: 'Barbarian', value: 'Barbarian'},
+                    { name: 'Bard', value: 'Bard'},
+                    { name: 'Cleric', value: 'Cleric'},
+                    { name: 'Druid', value: 'Druid'},
+                    { name: 'Fighter', value: 'Fighter'},
+                    { name: 'Monk', value: 'Monk'},
+                    { name: 'Paladin', value: 'Paladin'},
+                    { name: 'Ranger', value: 'Ranger'},
+                    { name: 'Rogue', value: 'Rogue'},
+                    { name: 'Sorcerer', value: 'Sorcerer'},
+                    { name: 'Warlock', value: 'Warlock'},
+                    { name: 'Wizard', value: 'Wizard'}
+                )
         ),
     async execute(interaction, client) {
         const name = interaction.options.getString('name');
