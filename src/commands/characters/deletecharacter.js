@@ -57,7 +57,7 @@ module.exports = {
             }));
 
             await interaction.reply({
-                content: `Are you sure you want to delete **${option}**?`,
+                content: `Are you sure you want to delete **${option}**? This cannot be undone.`,
                 components: [new ActionRowBuilder().addComponents(menu)],
                 ephemeral: true
             });

@@ -32,7 +32,7 @@ module.exports = {
 
     async execute(interaction, client) {
         const option = interaction.options.getString('name');
-        const optionSlug = Tools.formatSlug(interaction.options.getString('name'));
+        const optionSlug = Tools.formatSlug(option);
         choices = [];
         const cursor = await Character.find({ userId: interaction.user.id }).cursor();
         for(let character = await cursor.next(); character != null; character = await cursor.next()){
