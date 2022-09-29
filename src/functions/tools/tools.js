@@ -49,6 +49,7 @@ module.exports = {
             if(cost){ weaponProfile.cost = cost; }
 
             await weaponProfile.save().catch(console.error);
+            //console.log(`${name} loaded.`);
         }
         else{
             weaponExisting.name = name;
@@ -66,6 +67,7 @@ module.exports = {
             if(cost){ weaponExisting.cost = cost; } else{ weaponExisting.cost = undefined; }
 
             await weaponExisting.save().catch(console.error);
+            //console.log(`${name} reloaded.`);
         }
 
     },

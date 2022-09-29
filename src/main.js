@@ -3,6 +3,8 @@ const { token, databaseToken } = process.env;
 const { connect } = require('mongoose');
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const fs = require("fs");
+const { callbackify } = require("util");
+const { refreshWeapons } = require("./functions/startup/refreshWeapons");
 
 //const { Guilds, GuildMessages } = GatewayIntentBits;
 //const client = new Client({ intents: [Guilds, GuildMessages] });
@@ -23,9 +25,9 @@ for(const folder of functionFolders){
         if(folder == "handlers"){
             require(`./functions/${folder}/${file}`)(client);
         }
-        /*else{
+        else if(folder == "startup"){
             require(`./functions/${folder}/${file}`);
-        }*/
+        }
 }
 
 client.handleEvents();
@@ -34,4 +36,5 @@ client.handleComponents();
 client.login(token);
 (async() =>{
     await connect(databaseToken).catch(console.error);
+    await refreshWeapons().catch(console.error);
 })();

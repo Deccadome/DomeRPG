@@ -1,15 +1,11 @@
 const Weapon = require('../../schemas/weapon')
 const { SlashCommandBuilder } = require('discord.js');
-const Tools = require('../../functions/tools/tools.js')
+const Tools = require('../tools/tools.js')
 const mongoose = require('mongoose');
-const { addWeapon } = require('../../functions/tools/tools.js');
+const { addWeapon } = require('../tools/tools.js');
 
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName('refreshweapons')
-        .setDescription('Refreshes available weapon items.'),
-    
-    async execute(interaction, client) {
+    async refreshWeapons(interaction, client) {
         //await Weapon.collection.drop(); // deletes all weapons in the table
 
         // addWeapon(name, attackType, reach, rangeLower, rangeUpper, damage, damageType, weight, rarity, cost, description, [properties])
@@ -54,10 +50,6 @@ module.exports = {
         await addWeapon('Whip', 'Melee', 10, 0, 0, '1d4', 'Slashing', 3, 'Common', 2, 'Proficiency with a whip allows you to add your proficiency bonus to the attack roll for any attack you make with it.', ['Finesse', 'Reach']);
         await addWeapon('Yklwa', 'Melee', 5, 10, 30, '1d8', 'Piercing', 2, 'Common', 1, 'A yklwa (pronounced YICK-ul-wah) is a simple melee weapon that is the traditional weapon of Chultan warriors. A yklwa consists of a 3-foot wooden shaft with a steel or stone blade up to 18 inches long. Although it has the thrown weapon property, the yklwa is not well balanced for throwing (range 10/30 ft.).', ['Thrown']);
         
-        await interaction.reply({
-            content: `Weapons reloaded.`,
-            ephemeral: true
-        });
-
+        console.log(`Weapons reloaded.`);
     }
 }
