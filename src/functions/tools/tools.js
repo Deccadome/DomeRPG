@@ -36,7 +36,7 @@ module.exports = {
     },
 
     // Adds a spell to respective table
-    async addSpell(name, level, spellClass, castingTime, components, description, school, savingThrowDC, saveThrowType, damage, range, duration){
+    async addSpell(name, level, spellClass, castingTime, components, school, range, duration, description){
         slug = name.replace(/\s+/g, '-').toLowerCase();
         //console.log(`Name: ${name}, Slug: ${slug}`);
         spellExisting = await Spell.findOne({ slug: slug });
@@ -52,9 +52,6 @@ module.exports = {
                 description: description,
                 school: school
             });
-            if(savingThrowDC){spellProfile.savingThrowDC = savingThrowDc;}
-            if(savingThrowType){spellProfile.savingThrowType = savingThrowType;}
-            if(damage){spellProfile.damage = damage;}
             if(range){spellProfile.range = range;}
             if(duration){spellProfile.duration = duration;}
 
@@ -66,9 +63,6 @@ module.exports = {
             spellExisting.components = components;
             spellExisting.description = description;
             spellExisting.school = school;
-            if(savingThrowDC){spellExisting.savingThrowDC = savingThrowDc;}
-            if(savingThrowType){spellExisting.savingThrowType = savingThrowType;}
-            if(damage){spellExisting.damage = damage;}
             if(range){spellExisting.range = range;}
             if(duration){spellExisting.duration = duration;}
 
