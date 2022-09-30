@@ -6,6 +6,7 @@ const { SlashCommandBuilder } = require('discord.js');
 const mongoose = require('mongoose');
 const Scroll = require('../../schemas/scroll');
 const Spell = require('../../schemas/spell');
+const Weapon = require('../../schemas/weapon');
 
 module.exports = {
     // Format character name (or any string) to replace spaces with '-' and make all letters lowercase

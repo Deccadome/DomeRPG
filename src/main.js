@@ -5,6 +5,7 @@ const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const fs = require("fs");
 const { callbackify } = require("util");
 const { refreshWeapons } = require("./functions/startup/refreshWeapons");
+const { refreshSpells } = require("./functions/startup/refreshSpells");
 
 //const { Guilds, GuildMessages } = GatewayIntentBits;
 //const client = new Client({ intents: [Guilds, GuildMessages] });
@@ -36,5 +37,6 @@ client.handleComponents();
 client.login(token);
 (async() =>{
     await connect(databaseToken).catch(console.error);
+    await refreshSpells().catch(console.error);
     await refreshWeapons().catch(console.error);
 })();

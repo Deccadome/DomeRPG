@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const { addWeapon } = require('../tools/tools.js');
 
 module.exports = {
-    async refreshWeapons(interaction, client) {
+    async refreshWeapons() {
         //await Weapon.collection.drop(); // deletes all weapons in the table
 
         // addWeapon(name, attackType, reach, rangeLower, rangeUpper, damage, damageType, weight, rarity, cost, description, [properties])
