@@ -12,12 +12,13 @@ module.exports = {
         returnString = ``;
         for(let character = await cursor.next(); character != null; character = await cursor.next()){
             charName = character.displayName;
+            charRace = character.race;
             charClass = character.class;
             charRace = character.race;
             charStatus = 'Primary';
             if(character.active == false) charStatus = 'Inactive';
             returnString += `Name: **${charName}**\nRace: ${charRace}\nClass: ${charClass}\nStatus: _${charStatus}_\n\n`;
-            //console.log(character);
+            console.log(character);
             numCharacters++;
         }
         if(numCharacters == 0){ returnString += `You don't have any characters. Use /newcharacter to add one!`; }
