@@ -14,6 +14,17 @@ module.exports = {
         return input.replace(/\s+/g, '-').toLowerCase();
     },
 
+    // Get respective suffix for spell levels (ie. 0 = Cantrip, 1 = 1st, etc.)
+    getLevelSuffix: function(input) {
+        if(input == 0) {
+            return `Cantrip`;
+        }
+        else if(input == 1) return '1st Level';
+        else if(input == 2) return '2nd Level';
+        else if(input == 3) return '3rd Level';
+        else return input + 'th Level';
+    },
+
     // Adds a scroll to collection
     async addScroll(level, dc, attackBonus, underLevelCastDC){
         scrollExisting = await Scroll.findOne({ level: level });

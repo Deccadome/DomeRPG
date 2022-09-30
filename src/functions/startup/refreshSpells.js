@@ -7,7 +7,7 @@ const { addSpell } = require('../tools/tools.js');
 module.exports = {
     async refreshSpells() {
         //await Scroll.collection.drop(); // deletes all scrolls in the table
-
+        //
         // addSpell(name, level, spellClass, castingTime, components, school, range, duration, description);
         await addSpell("Abi-Dalzim's Horrid Wilting", 8, ["Sorcerer", "Wizard"], "1 Action", "V, S, M (a bit of sponge)", "Necromancy", "150 feet", "Instantaneous", "You draw the moisture from every creature in a 30-foot cube centered on a point you choose within range. Each creature in that area must make a Constitution saving throw. Constructs and undead aren’t affected, and plants and water elementals make this saving throw with disadvantage. A creature takes 12d8 necrotic damage on a failed save, or half as much damage on a successful one. \nNonmagical plants in the area that aren’t creatures, such as trees and shrubs, wither and die instantly.");
         await addSpell("Absorb Elements", 1, ["Druid", "Ranger", "Sorcerer"], "Special", "S", "Abjuration", "Self", "1 round", "1 Reaction, which you take when you take acid, cold, fire, lightning, or thunder damage. \n\nThe spell captures some of the incoming energy, lessening its effect on you and storing it for your next melee attack. You have resistance to the triggering damage type until the start of your next turn. Also, the first time you hit with a melee attack on your next turn, the target takes an extra 1d6 damage of the triggering type, and the spell ends.\n\nWhen you cast this spell using a spell slot of 2nd level or higher, the extra damage increases by 1d6 for each slot level above 1st.");

@@ -81,14 +81,7 @@ module.exports = {
                 
                 const embed = new EmbedBuilder()
                 .setTitle(`${spell.name}`)
-                .setDescription(`
-                    **${subheader}**\n
-                    **Casting Time:** ${castingTime}
-                    **Range/Area:** ${range}
-                    **Components:** ${components}
-                    **Duration:** ${duration}
-                    **Classes:** ${spellClasses}
-                `)
+                .setDescription(`**${subheader}**\n\n**Casting Time:** ${castingTime}\n**Range/Area:** ${range}\n**Components:** ${components}\n**Duration:** ${duration}\n**Classes:** ${spellClasses}`)
                 .setColor(0xEA0029);
                 //.setThumbnail(interaction.user.displayAvatarURL())
                     
