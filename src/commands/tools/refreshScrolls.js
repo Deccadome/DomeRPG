@@ -1,6 +1,5 @@
 const Scroll = require('../../schemas/scroll')
 const { SlashCommandBuilder } = require('discord.js');
-const Tools = require('../../functions/tools/tools.js')
 const mongoose = require('mongoose');
 const { addScroll } = require('../../functions/tools/tools.js');
 

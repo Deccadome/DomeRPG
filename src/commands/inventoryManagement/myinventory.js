@@ -14,7 +14,7 @@ module.exports = {
             .setTitle(`${curCharacter.displayName}'s Inventory`)
             //.setDescription(`Description of embed`)
             .setColor(0xEA0029)
-            .setThumbnail(client.user.displayAvatarURL())
+            .setThumbnail(interaction.user.displayAvatarURL())
             .addFields([
                 {
                     name: `Gold`,

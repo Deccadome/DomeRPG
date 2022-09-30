@@ -6,11 +6,23 @@ const { SlashCommandBuilder } = require('discord.js');
 const mongoose = require('mongoose');
 const Scroll = require('../../schemas/scroll');
 const Spell = require('../../schemas/spell');
+const Weapon = require('../../schemas/weapon');
 
 module.exports = {
     // Format character name (or any string) to replace spaces with '-' and make all letters lowercase
     formatSlug: function(input) {
         return input.replace(/\s+/g, '-').toLowerCase();
+    },
+
+    // Get respective suffix for spell levels (ie. 0 = Cantrip, 1 = 1st, etc.)
+    getLevelSuffix: function(input) {
+        if(input == 0) {
+            return `Cantrip`;
+        }
+        else if(input == 1) return '1st Level';
+        else if(input == 2) return '2nd Level';
+        else if(input == 3) return '3rd Level';
+        else return input + 'th Level';
     },
 
     // Adds a scroll to collection
@@ -93,6 +105,7 @@ module.exports = {
             if(cost){ weaponProfile.cost = cost; }
 
             await weaponProfile.save().catch(console.error);
+            //console.log(`${name} loaded.`);
         }
         else{
             weaponExisting.attackType = attackType;
@@ -108,6 +121,7 @@ module.exports = {
             if(cost){ weaponExisting.cost = cost; } else{ weaponExisting.cost = undefined; }
 
             await weaponExisting.save().catch(console.error);
+            //console.log(`${name} reloaded.`);
         }
 
     },
