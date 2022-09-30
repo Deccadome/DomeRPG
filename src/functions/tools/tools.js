@@ -5,7 +5,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const mongoose = require('mongoose');
 const Scroll = require('../../schemas/scroll');
-const Weapon = require('../../schemas/weapon');
+const Spell = require('../../schemas/spell');
 
 module.exports = {
     // Format character name (or any string) to replace spaces with '-' and make all letters lowercase
@@ -15,16 +15,60 @@ module.exports = {
 
     // Adds a scroll to collection
     async addScroll(level, dc, attackBonus, underLevelCastDC){
-        scrollProfile = await new Scroll({
-            _id: mongoose.Types.ObjectId(),
-            level: level,
-            savingThrowDC: dc,
-            attackBonus: attackBonus,
-            underLevelCastDC: underLevelCastDC
-        });
-        await scrollProfile.save().catch(console.error);
+        scrollExisting = await Scroll.findOne({ level: level });
+        if(!scrollExisting){
+            scrollProfile = await new Scroll({
+                _id: mongoose.Types.ObjectId(),
+                level: level,
+                savingThrowDC: dc,
+                attackBonus: attackBonus,
+                underLevelCastDC: underLevelCastDC
+            });
+            
+            await scrollProfile.save().catch(console.error);
+        } else {
+            scrollExisting.savingThrowDC = savingThrowDC;
+            scrollExisting.attackBonus = attackBonus;
+            scrollExisting.underLevelCastDC = underLevelCastDC;
+
+            await scrollExisting.save().catch(console.error);
+        }
     },
 
+    // Adds a spell to respective table
+    async addSpell(name, level, spellClass, castingTime, components, school, range, duration, description){
+        slug = name.replace(/\s+/g, '-').toLowerCase();
+        //console.log(`Name: ${name}, Slug: ${slug}`);
+        spellExisting = await Spell.findOne({ slug: slug });
+        if (!spellExisting){
+            spellProfile = await new Spell({
+                _id: mongoose.Types.ObjectId(),
+                name: name,
+                slug: slug,
+                level: level,
+                spellClass: spellClass,
+                castingTime: castingTime,
+                components: components,
+                description: description,
+                school: school
+            });
+            if(range){spellProfile.range = range;}
+            if(duration){spellProfile.duration = duration;}
+
+            await spellProfile.save().catch(console.error);
+        } else {
+            spellExisting.level = level;
+            spellExisting.castingTime = castingTime;
+            spellExisting.spellClass = spellClass;
+            spellExisting.components = components;
+            spellExisting.description = description;
+            spellExisting.school = school;
+            if(range){spellExisting.range = range;}
+            if(duration){spellExisting.duration = duration;}
+
+            await spellExisting.save().catch(console.error);
+        }
+    },
     // Adds a weapon to collection
     async addWeapon(name, attackType, reach, rangeLower, rangeUpper, damage, damageType, weight, rarity, cost, description, properties){
         slug = name.replace(/\s+/g, '-').toLowerCase();
@@ -51,8 +95,6 @@ module.exports = {
             await weaponProfile.save().catch(console.error);
         }
         else{
-            weaponExisting.name = name;
-            weaponExisting.slug = slug;
             weaponExisting.attackType = attackType;
             weaponExisting.damage = damage;
             weaponExisting.damageType = damageType;
