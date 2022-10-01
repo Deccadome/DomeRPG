@@ -77,12 +77,23 @@ module.exports = {
                 }
 
                 description = spell.description;
+
+                var color;
+                if(school == 'Abjuration'){ color = 0xE1DC75; } // gold
+                else if(school == 'Conjuration'){ color = 0x43D667; } // green
+                else if(school == 'Divination'){ color = 0xFFFFFF; } // white
+                else if(school == 'Enchantment'){ color = 0xA0D9D9; } // silver/teal
+                else if(school == 'Evocation'){ color = 0xEA0029; } // red
+                else if(school == 'Illusion'){ color = 0xFF00F7; } // purple
+                else if(school == 'Necromancy'){ color = 0x000000; } // black
+                else if(school == 'Transmutation'){ color = 0x0033FF; } // blue
+                else{ color = 0xFF7502; }
                 
                 
                 const embed = new EmbedBuilder()
                 .setTitle(`${spell.name}`)
                 .setDescription(`**${subheader}**\n\n**Casting Time:** ${castingTime}\n**Range/Area:** ${range}\n**Components:** ${components}\n**Duration:** ${duration}\n**Classes:** ${spellClasses}`)
-                .setColor(0xEA0029);
+                .setColor(color);
                 //.setThumbnail(interaction.user.displayAvatarURL())
                     
                 if(description.length > 1024){
