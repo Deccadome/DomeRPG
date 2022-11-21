@@ -67,7 +67,13 @@ module.exports = {
             if(range){spellProfile.range = range;}
             if(duration){spellProfile.duration = duration;}
 
-            await spellProfile.save().catch(console.error);
+            try{
+                await spellProfile.save()
+            }
+            catch{
+                console.log(`Spell Name: ${name}`);
+                console.error;
+            }
         } else {
             spellExisting.level = level;
             spellExisting.castingTime = castingTime;
@@ -78,7 +84,13 @@ module.exports = {
             if(range){spellExisting.range = range;}
             if(duration){spellExisting.duration = duration;}
 
-            await spellExisting.save().catch(console.error);
+            try{
+                await spellExisting.save()
+            }
+            catch{
+                console.log(`Spell Name: ${name}`);
+                console.error;
+            }
         }
     },
     // Adds a weapon to collection
