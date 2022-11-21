@@ -77,12 +77,23 @@ module.exports = {
                 }
 
                 description = spell.description;
+
+                var color;
+                if(school.includes('Abjuration')){ color = 0xE1DC75; } // gold
+                else if(school.includes('Conjuration')){ color = 0x43D667; } // green
+                else if(school.includes('Divination')){ color = 0xFFFFFF; } // white
+                else if(school.includes('Enchantment')){ color = 0xA0D9D9; } // silver/teal
+                else if(school.includes('Evocation')){ color = 0xEA0029; } // red
+                else if(school.includes('Illusion')){ color = 0xFF00F7; } // purple
+                else if(school.includes('Necromancy')){ color = 0x000000; } // black
+                else if(school.includes('Transmutation')){ color = 0x0033FF; } // blue
+                else{ color = 0xFF7502; }
                 
                 
                 const embed = new EmbedBuilder()
                 .setTitle(`${spell.name}`)
-                .setDescription(`**${subheader}**\n\n**Casting Time:** ${castingTime}\n**Range/Area:** ${range}\n**Components:** ${components}\n**Duration:** ${duration}\n**Classes:** ${spellClasses}`)
-                .setColor(0xEA0029);
+                .setDescription(`**${subheader}**\n\n**Casting Time:** ${castingTime}\n**Range/Area:** ${range}\n**Components:** ${components}\n**Duration:** ${duration}\n**Class(es):** ${spellClasses}`)
+                .setColor(color);
                 //.setThumbnail(interaction.user.displayAvatarURL())
                     
                 if(description.length > 1024){
