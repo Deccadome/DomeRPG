@@ -1,8 +1,10 @@
 require("dotenv").config();
 const { token, databaseToken } = process.env;
-const { connect } = require('mongoose');
+const mongoose = require('mongoose');
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const fs = require("fs");
+const { callbackify } = require("util");
+const Startup = require("./functions/startup/startupTools");
 
 //const { Guilds, GuildMessages } = GatewayIntentBits;
 //const client = new Client({ intents: [Guilds, GuildMessages] });
@@ -23,9 +25,9 @@ for(const folder of functionFolders){
         if(folder == "handlers"){
             require(`./functions/${folder}/${file}`)(client);
         }
-        /*else{
+        else if(folder == "startup"){
             require(`./functions/${folder}/${file}`);
-        }*/
+        }
 }
 
 client.handleEvents();
@@ -33,5 +35,7 @@ client.handleCommands();
 client.handleComponents();
 client.login(token);
 (async() =>{
-    await connect(databaseToken).catch(console.error);
+    await mongoose.connect(databaseToken).catch(console.error);
+    await Startup.refreshCheck("./src/functions/startup/refreshSpells.js");
+    await Startup.refreshCheck("./src/functions/startup/refreshWeapons.js");
 })();
