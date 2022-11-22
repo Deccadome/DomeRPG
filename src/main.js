@@ -5,6 +5,7 @@ const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const fs = require("fs");
 const { callbackify } = require("util");
 const Startup = require("./functions/startup/startupTools");
+const Tests = require("./functions/tests/test.js");
 
 //const { Guilds, GuildMessages } = GatewayIntentBits;
 //const client = new Client({ intents: [Guilds, GuildMessages] });
@@ -25,7 +26,7 @@ for(const folder of functionFolders){
         if(folder == "handlers"){
             require(`./functions/${folder}/${file}`)(client);
         }
-        else if(folder == "startup"){
+        else if(folder == "startup" || folder == "tests"){
             require(`./functions/${folder}/${file}`);
         }
 }
