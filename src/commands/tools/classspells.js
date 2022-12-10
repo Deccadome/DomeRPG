@@ -60,7 +60,7 @@ module.exports = {
             for(let spell = await cursor.next(); spell != null; spell = await cursor.next()){
                 console.log(spell.name);
                 spellsFound += { name: spell.name, level: spell.level };
-                outputString += `**${spell.name}** (${getLevelSuffix(spell.level)} Spell)\n`
+                outputString += `*${spell.name}* (${getLevelSuffix(spell.level)} Spell)\n`
             }
             await interaction.reply({
                 content: outputString,
