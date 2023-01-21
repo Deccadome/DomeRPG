@@ -18,7 +18,7 @@ module.exports = {
                 });
             }
         }
-        else if(interaction.isButton()){
+        else if(interaction.isButton() && !interaction.customId.includes(`nR`)){
             const { buttons } = client;
             const { customId } = interaction;
             const button = buttons.get(customId);
@@ -30,18 +30,19 @@ module.exports = {
                 console.error(error);
             }
         }
-        else if(interaction.isSelectMenu()){
+        else if(interaction.isSelectMenu() && !interaction.customId.includes(`nR`)){
+            console.log(interaction);
             const { selectMenus } = client;
             const { customId } = interaction;
             const menu = selectMenus.get(customId);
-
             if(!menu) return new Error('No existing code for this select menu.');
-            
             try {
                 await menu.execute(interaction, client);
             } catch (error) {
                 console.error(error);
             }
+
+            
         }
         else if(interaction.type == InteractionType.ModalSubmit){
             const { modals } = client;

@@ -14,6 +14,13 @@ module.exports = {
         return input.replace(/\s+/g, '-').toLowerCase();
     },
 
+    removeByValue: function(arr, value) {
+        console.log(`${arr}: ${value}`);
+        index = arr.indexOf(parseInt(value, 10));
+        arr.splice(index, 1);
+        return arr;
+    },
+
     // Get respective suffix for spell levels (ie. 0 = Cantrip, 1 = 1st, etc.)
     getLevelSuffix: function(input) {
         if(input == 0) {
