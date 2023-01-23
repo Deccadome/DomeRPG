@@ -15,10 +15,26 @@ module.exports = {
     },
 
     removeByValue: function(arr, value) {
-        console.log(`${arr}: ${value}`);
+        //console.log(`Removed ${value} from ${arr}`);
         index = arr.indexOf(parseInt(value, 10));
         arr.splice(index, 1);
         return arr;
+    },
+
+    rollDie: function(quantity, die) {
+        console.log(`Quantity: ${quantity}`);
+        if(!quantity){ quantity = 1; }
+        result = 0;
+        rolls = [];
+        for(i = 0; i < quantity; i++){
+            console.log(`Die: ${die}`);
+            roll = Math.floor(Math.random() * die + 1);
+            result += roll;
+            rolls.push(roll);
+            console.log(`Result: ${result} Rolls: ${rolls}`);
+        }
+        output = [result, rolls];
+        return output;
     },
 
     // Get respective suffix for spell levels (ie. 0 = Cantrip, 1 = 1st, etc.)

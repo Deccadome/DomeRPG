@@ -7,6 +7,7 @@ const { SelectMenuBuilder, SelectMenuOptionBuilder } = require('discord.js');
 module.exports = {
     populateOptions: function(menu, values){
         menu.setOptions();
+        console.log(`Values: ${values}`);
         for(i = 0; i < values.length; i++){
             menu.addOptions(new SelectMenuOptionBuilder({
                 label: `${values[i]}`,
