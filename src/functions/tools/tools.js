@@ -22,16 +22,16 @@ module.exports = {
     },
 
     rollDie: function(quantity, die) {
-        console.log(`Quantity: ${quantity}`);
+        //console.log(`Quantity: ${quantity}`);
         if(!quantity){ quantity = 1; }
         result = 0;
         rolls = [];
         for(i = 0; i < quantity; i++){
-            console.log(`Die: ${die}`);
+            //console.log(`Die: ${die}`);
             roll = Math.floor(Math.random() * die + 1);
             result += roll;
             rolls.push(roll);
-            console.log(`Result: ${result} Rolls: ${rolls}`);
+            //console.log(`Result: ${result} Rolls: ${rolls}`);
         }
         output = [result, rolls];
         return output;
@@ -39,9 +39,7 @@ module.exports = {
 
     // Get respective suffix for spell levels (ie. 0 = Cantrip, 1 = 1st, etc.)
     getLevelSuffix: function(input) {
-        if(input == 0) {
-            return `Cantrip`;
-        }
+        if(input == 0) return `Cantrip`;
         else if(input == 1) return '1st Level';
         else if(input == 2) return '2nd Level';
         else if(input == 3) return '3rd Level';

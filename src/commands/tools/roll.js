@@ -16,7 +16,7 @@ module.exports = {
         const form = new RegExp('(^[0-9]*)+[d]+([0-9]*)');
         const regexMatch = roll.match(form);
         result = 0;
-        console.log(regexMatch);
+        //console.log(regexMatch);
         if(regexMatch[1] > 200){
             await interaction.reply({
                 content: `What could you *possibly* need that many dice for??`

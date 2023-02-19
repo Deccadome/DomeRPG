@@ -11,12 +11,14 @@ module.exports = {
         console.log(curActive);
         if(!curActive){ 
             await interaction.reply({
-                content: `You don't currently have a primary character.`
+                content: `You don't currently have a primary character.`,
+                ephemeral: true
             });
         }
         else{
             await interaction.reply({
-                content: `**${curActive.displayName}** is your current primary character.`
+                content: `**${curActive.displayName}** is your current primary character.`,
+                ephemeral: true
             });
         }
     }

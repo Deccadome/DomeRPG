@@ -2,8 +2,8 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle, SelectMenuBuilder, SelectMenuOptionBuilder } = require('discord.js');
 const { populateOptions } = require('../../functions/tools/charCreationTools.js');
 const { removeByValue } = require('../../functions/tools/tools.js');
+const Character = require('../../schemas/character');
 const mongoose = require('mongoose');
-const { deleteOne } = require('../../schemas/scroll.js');
 
 const STR = 0;
 const DEX = 1;
@@ -105,14 +105,15 @@ module.exports = {
             components: [
                 methodButtonRow,
                 scoreInputRow
-            ]
+            ],
         });
 
         state = STR; // default state
         const collector = interaction.channel.createMessageComponentCollector({ time: 300000 });
 
         collector.on('collect', async i => {
-            console.log(`Input Scores: ${inputScores}`);
+            if(i.user.id !== interaction.user.id) return;
+            //console.log(`Input Scores: ${inputScores}`);
             switch(i.customId){
                 case 'nRstrMenu':
                     inputScores[STR] = parseInt(i.values[0]);
@@ -123,7 +124,7 @@ module.exports = {
                     scoreInputRow.setComponents([dexMenu]);
                     
                     await i.update({
-                        content: `Strength set to ${inputScores[STR]}`,
+                        content: `Strength set to ${inputScores[STR]}\n`,
                         components: [
                             scoreInputRow,
                             confirmRow
@@ -210,6 +211,16 @@ module.exports = {
                     break;
                 case 'nRconfirmButton':
                     confirmRow.setComponents(backButton);
+                    activeChar = await Character.findOne({ userId: interaction.user.id, active: true });
+                    if(activeChar){
+                        activeChar.strength = inputScores[STR];
+                        activeChar.dexterity = inputScores[DEX];
+                        activeChar.constitution = inputScores[CON];
+                        activeChar.intelligence = inputScores[INT];
+                        activeChar.wisdom = inputScores[WIS];
+                        activeChar.charisma = inputScores[CHA];
+                        await activeChar.save().catch(console.error);
+                    }
                     await i.reply({
                         content: 'Wowzers'
                     })
