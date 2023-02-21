@@ -2,6 +2,7 @@
 const { ActionRowBuilder, SelectMenuBuilder, SelectMenuOptionBuilder, ButtonBuilder, ButtonStyle, ConnectionService } = require('discord.js');
 const Character = require('../../schemas/character');
 const mongoose = require('mongoose');
+const { getStats } = require('../../functions/tools/charCreationTools')
 
 module.exports = {
     data: {
@@ -25,7 +26,7 @@ module.exports = {
             .setCustomId(`rollButton`)
             .setLabel(`Roll`)
             .setStyle(ButtonStyle.Primary);
-            const buttonRow = new ActionRowBuilder()
+        const buttonRow = new ActionRowBuilder()
             .addComponents([
                 buttonStandard, buttonPointBuy, buttonManual, buttonRoll
             ]);    
@@ -237,17 +238,24 @@ module.exports = {
                     else if(cha == 14) chaDec.setLabel(`CHA-1 (+2 pts)`);
                     else if(cha == 15) chaInc.setDisabled(true);
                     break;
-                case 'nRconfirm':
+                case 'nRconfirmButton':
                     activeChar = await Character.findOne({ userId: interaction.user.id, active: true });
                     if(activeChar){
-                        activeChar.strength = inputScores[STR];
-                        activeChar.dexterity = inputScores[DEX];
-                        activeChar.constitution = inputScores[CON];
-                        activeChar.intelligence = inputScores[INT];
-                        activeChar.wisdom = inputScores[WIS];
-                        activeChar.charisma = inputScores[CHA];
+                        activeChar.strength = str;
+                        activeChar.dexterity = dex;
+                        activeChar.constitution = con;
+                        activeChar.intelligence = int;
+                        activeChar.wisdom = wis;
+                        activeChar.charisma = cha;
                         await activeChar.save().catch(console.error);
                     }
+                    exit = true;
+                    collector.stop();
+                    stats = await getStats(interaction.user.id);
+                    await i.update({
+                        content: `${activeChar.displayName} stats set:\n${stats}`,
+                        components: []
+                    });
                 case 'standardButton':
                 case 'rollButton':
                 case 'manualButton':
