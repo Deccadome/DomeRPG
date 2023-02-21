@@ -1,10 +1,11 @@
 // Standard array allocation for Ability Scores
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle, SelectMenuBuilder, SelectMenuOptionBuilder } = require('discord.js');
-const { populateOptions } = require('../../functions/tools/charCreationTools.js');
+const { populateOptions, getStats } = require('../../functions/tools/charCreationTools.js');
 const { removeByValue } = require('../../functions/tools/tools.js');
 const Character = require('../../schemas/character');
 const mongoose = require('mongoose');
 
+const INIT = -1;
 const STR = 0;
 const DEX = 1;
 const CON = 2;
@@ -13,6 +14,7 @@ const WIS = 4;
 const CHA = 5;
 const CONFIRM = 6;
 const DONE = 7;
+const BREAK = 8;
 
 module.exports = {
     data: {
@@ -221,9 +223,11 @@ module.exports = {
                         activeChar.charisma = inputScores[CHA];
                         await activeChar.save().catch(console.error);
                     }
-                    await i.reply({
-                        content: 'Wowzers'
-                    })
+                    stats = await getStats(interaction.user.id);
+                    await i.update({
+                        content: `${activeChar.displayName} stats set:\n${stats}`,
+                        components: []
+                    });
                     state = DONE;
                     collector.stop();
                     break;
@@ -322,14 +326,22 @@ module.exports = {
                         default:
                     }
                     break;
+                case 'pointBuyButton':
+                case 'rollButton':
+                case 'manualButton':
+                    console.log(`Standard collector stopping.`);
+                    state = BREAK;
+                    collector.stop();
+                    break;
+
                 default:
                     console.log(`Unknown interaction: ${i.customId}`);
             }
         });
 
         collector.on('end', collected => {
-            console.log(`Statroll test timed out. ${collected.size} interactions collected.`);
-            if(state != DONE){
+            console.log(`Statroll test timed out. ${collected.size} interaction(s) collected.`);
+            if(state != DONE && state != BREAK){
                 interaction.update({
                     content: `Interaction timed out. Please try again.`
                 });

@@ -19,6 +19,7 @@ module.exports = {
             }
         }
         else if(interaction.isButton() && !interaction.customId.includes(`nR`)){
+            console.log(interaction);
             const { buttons } = client;
             const { customId } = interaction;
             const button = buttons.get(customId);

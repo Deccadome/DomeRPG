@@ -47,9 +47,10 @@ module.exports = {
         ),
     async execute(interaction, client) {
         const playerClass = interaction.options.getString('class');
-        const spellLevel = interaction.options.getNumber('level');
+        spellLevel = -1;
+        spellLevel = interaction.options.getNumber('level');
         var cursor;
-        if(spellLevel){
+        if(spellLevel != -1){
             cursor = Spell.find({ spellClass: playerClass, level: spellLevel }).cursor();
         } else {
             cursor = Spell.find({ spellClass: playerClass }).cursor();
