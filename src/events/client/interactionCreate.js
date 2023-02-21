@@ -19,7 +19,6 @@ module.exports = {
             }
         }
         else if(interaction.isButton() && !interaction.customId.includes(`nR`)){
-            console.log(interaction);
             const { buttons } = client;
             const { customId } = interaction;
             const button = buttons.get(customId);
@@ -32,7 +31,6 @@ module.exports = {
             }
         }
         else if(interaction.isSelectMenu() && !interaction.customId.includes(`nR`)){
-            console.log(interaction);
             const { selectMenus } = client;
             const { customId } = interaction;
             const menu = selectMenus.get(customId);

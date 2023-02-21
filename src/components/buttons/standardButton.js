@@ -329,7 +329,6 @@ module.exports = {
                 case 'pointBuyButton':
                 case 'rollButton':
                 case 'manualButton':
-                    console.log(`Standard collector stopping.`);
                     state = BREAK;
                     collector.stop();
                     break;
@@ -340,12 +339,12 @@ module.exports = {
         });
 
         collector.on('end', collected => {
-            console.log(`Statroll test timed out. ${collected.size} interaction(s) collected.`);
             if(state != DONE && state != BREAK){
-                interaction.update({
-                    content: `Interaction timed out. Please try again.`
-                });
+                interaction.deleteReply();
+                interaction.channel.send(`<@${interaction.user.id}> Interaction timed out. Please try again.`);
+                console.log(`Standard roll collector timed out.`)
             }
+            else console.log(`Standard collector stopping.`);
         });
     }
 }
