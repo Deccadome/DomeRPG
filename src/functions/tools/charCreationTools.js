@@ -2,7 +2,7 @@
 // const CharTools = require('relative/path/to/tools/charTools.js')
 //
 // Usage would then be CharTools.functionName();
-const { SelectMenuBuilder, SelectMenuOptionBuilder } = require('discord.js');
+const { SelectMenuOptionBuilder } = require('discord.js');
 const Character = require('../../schemas/character');
 const mongoose = require('mongoose');
 

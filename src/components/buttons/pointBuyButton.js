@@ -1,5 +1,5 @@
 // Point Buy assignment for Ability Scores
-const { ActionRowBuilder, SelectMenuBuilder, SelectMenuOptionBuilder, ButtonBuilder, ButtonStyle, ConnectionService } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const Character = require('../../schemas/character');
 const mongoose = require('mongoose');
 const { getStats } = require('../../functions/tools/charCreationTools')

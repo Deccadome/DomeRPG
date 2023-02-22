@@ -1,5 +1,5 @@
 // Standard array allocation for Ability Scores
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle, SelectMenuBuilder, SelectMenuOptionBuilder } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle, SelectMenuBuilder } = require('discord.js');
 const { populateOptions, getStats } = require('../../functions/tools/charCreationTools.js');
 const { removeByValue } = require('../../functions/tools/tools.js');
 const Character = require('../../schemas/character');
