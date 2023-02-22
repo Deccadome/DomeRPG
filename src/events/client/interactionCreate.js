@@ -18,7 +18,7 @@ module.exports = {
                 });
             }
         }
-        else if(interaction.isButton()){
+        else if(interaction.isButton() && !interaction.customId.includes(`nR`)){
             const { buttons } = client;
             const { customId } = interaction;
             const button = buttons.get(customId);
@@ -30,26 +30,22 @@ module.exports = {
                 console.error(error);
             }
         }
-        else if(interaction.isSelectMenu()){
+        else if(interaction.isSelectMenu() && !interaction.customId.includes(`nR`)){
             const { selectMenus } = client;
             const { customId } = interaction;
             const menu = selectMenus.get(customId);
-
             if(!menu) return new Error('No existing code for this select menu.');
-            
             try {
                 await menu.execute(interaction, client);
             } catch (error) {
                 console.error(error);
             }
         }
-        else if(interaction.type == InteractionType.ModalSubmit){
+        else if(interaction.type == InteractionType.ModalSubmit && !interaction.customId.includes(`nR`)){
             const { modals } = client;
             const { customId } = interaction;
             const modal = modals.get(customId);
-
             if(!modal) return new Error('No existing code for this modal.');
-            
             try {
                 await modal.execute(interaction, client);
             } catch (error) {
@@ -60,9 +56,7 @@ module.exports = {
             const { commands } = client;
             const { commandName } = interaction;
             const contextCommand = commands.get(commandName);
-
             if(!contextCommand) return new Error('No existing code for this context command.');
-            
             try {
                 await contextCommand.execute(interaction, client);
             } catch (error) {
@@ -74,7 +68,6 @@ module.exports = {
             const { commandName } = interaction;
             const command = commands.get(commandName);
             if(!command) return;
-
             try {
                 await command.autocomplete(interaction, client);
             } catch (error) {

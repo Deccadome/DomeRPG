@@ -1,40 +1,66 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require("mongoose");
 const characterSchema = new Schema({
-    _id: Schema.Types.ObjectId,
-    userId: String,
-    displayName: {type: String, required: true},
-    charSlug: {type: String, required: true}, // first-last
-    class: String,
-    active: {type: Boolean, required: true},
-    goldBalance: {type: Number, required: true, default: 0 },
-    weapons: [{ 
-        itemId: { type: Schema.Types.ObjectId, ref: 'Weapon', required: true }, 
-        name: String,
-        notes: String 
-    }],
-    armor: [{ 
-        itemId: { type: Schema.Types.ObjectId, ref: 'Armor', required: true }, 
-        notes: String, 
-    }],
-    wands: [{ 
-        itemId: { type: Schema.Types.ObjectId, ref: 'Wand', required: true }, 
-        name: String,
-        notes: String 
-    }],
-    scrolls: [{ 
-        scrollId: { type: Schema.Types.ObjectId, ref: 'Scroll', required: true }, 
-        spellId: {type: Schema.Types.ObjectId, ref: 'Spell', required: true },
-        notes: String 
-    }],
-    potions: [{ 
-        itemId: { type: Schema.Types.ObjectId, ref: 'Potion' }, 
-        notes: String 
-    }],
-    misc: [{ 
-        itemId: { type: Schema.Types.ObjectId, ref: 'Misc' }, // optional for pre-added miscellaneous items
-        name: String, 
-        notes: String 
-    }],
+  _id: Schema.Types.ObjectId,
+  userId: { type: String, required: true },
+  displayName: { type: String, required: true },
+  charSlug: { type: String, required: true }, // first-last
+  race: { type: String, required: true },
+  class: { type: String, required: true },
+  active: { type: Boolean, required: true },
+  goldBalance: { type: Number, required: true, default: 0 },
+  strength: { type: Number },
+  dexterity: { type: Number },
+  constitution: { type: Number },
+  intelligence: { type: Number },
+  wisdom: { type: Number },
+  charisma: { type: Number },
+  weapons: [
+    {
+      weaponID: { type: Schema.Types.ObjectId, ref: "Weapon", required: true },
+      localId: Number,
+      customName: String,
+      notes: String,
+    },
+  ],
+  armor: [
+    {
+      name: { type: String, ref: "Armor", required: true },
+      notes: String,
+    },
+  ],
+  wands: [
+    {
+      itemId: { type: Schema.Types.ObjectId, ref: "Wand", required: true },
+      usesRemaining: Number,
+      name: String,
+      notes: String,
+    },
+  ],
+  scrolls: [
+    {
+      scrollLevel: { type: Number, ref: "Scroll", required: true },
+      spellName: { type: String, ref: "Spell", required: true },
+      notes: String,
+    },
+  ],
+  potions: [
+    {
+      itemId: { type: String, ref: "Potion" },
+      notes: String,
+    },
+  ],
+  misc: [
+    {
+      itemName: { type: String, ref: "Misc" }, // optional for pre-added miscellaneous items
+      name: String,
+      notes: String,
+    },
+  ],
+  spells: [
+    {
+      spellName: { type: String, ref: "Spell", required: true },
+    },
+  ],
 });
 
 module.exports = model("Character", characterSchema);
