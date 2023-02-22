@@ -5,10 +5,15 @@ const characterSchema = new Schema({
     displayName: {type: String, required: true},
     charSlug: {type: String, required: true}, // first-last
     race: {type: String, required: true},
-    subRace: String,
     class: {type: String, required: true},
     active: {type: Boolean, required: true},
     goldBalance: {type: Number, required: true, "default": 0 },
+    strength: {type: Number},
+    dexterity: {type: Number},
+    constitution: {type: Number},
+    intelligence: {type: Number},
+    wisdom: {type: Number},
+    charisma: {type: Number},
     weapons: [{ 
         weaponID: { type: Schema.Types.ObjectId, ref: 'Weapon', required: true },
         localId: Number, 
@@ -38,6 +43,9 @@ const characterSchema = new Schema({
         itemName: { type: String, ref: 'Misc' }, // optional for pre-added miscellaneous items
         name: String, 
         notes: String 
+    }],
+    spells: [{
+        spellName: { type: String, ref: 'Spell', required: true },
     }],
 });
 
