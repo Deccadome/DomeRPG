@@ -46,33 +46,54 @@ module.exports = {
                 )
         ),
     async execute(interaction, client) {
-        const playerClass = interaction.options.getString('class');
+        
+        const inputClass = interaction.options.getString('class');
+        const embed = new EmbedBuilder().setTitle(`${inputClass} Spells`);
         spellLevel = -1;
-        spellLevel = interaction.options.getNumber('level');
+        if(interaction.options.getNumber('level') !== null){
+            spellLevel = interaction.options.getNumber('level');
+            embed.setDescription(`${getLevelSuffix(spellLevel)}`);
+        }
+
         var cursor;
         if(spellLevel != -1){
-            cursor = Spell.find({ spellClass: playerClass, level: spellLevel }).cursor();
+            cursor = Spell.find({ spellClass: inputClass, level: spellLevel }).cursor();
         } else {
-            cursor = Spell.find({ spellClass: playerClass }).cursor();
+            cursor = Spell.find({ spellClass: inputClass }).cursor();
         }
-        if(cursor){
-            outputString = `**${playerClass} Spells**\n\n`
-            spellsFound = [];
-            for(let spell = await cursor.next(); spell != null; spell = await cursor.next()){
+        console.log(cursor.constructor.name);
+        outputString = `**${inputClass} Spells**\n\n`
+        spellsFound = [[], [], [], [], [], [], [], [], [], []];
+        let spell = await cursor.next();
+        if(spell != null) {
+            while(spell != null){
                 console.log(spell.name);
-                spellsFound += { name: spell.name, level: spell.level };
-                outputString += `*${spell.name}* (${getLevelSuffix(spell.level)} Spell)\n`
+                spellsFound[spell.level].push(spell.name);
+                spell = await cursor.next();
+            }
+            for(i = 0; i < spellsFound.length; i++){
+                if(spellsFound[i][0]){
+                    fieldName = getLevelSuffix(i);
+                    if(fieldName != `Cantrip`) fieldName += ` Spells`;
+                    else fieldName += `s`;
+                    embed.addFields([{
+                        name: `${fieldName}`,
+                        value: `${spellsFound[i].join(`\n`)}`
+                    }]);
+                }
             }
             await interaction.reply({
-                content: outputString,
-                ephemeral: true
+                embeds: [embed]
             });
-        } else{
+        } else {
             await interaction.reply({
-                content: `No spells found for that class.`,
+                content: `No spells found for that class/level.`,
                 ephemeral: true
             })
         }
+        
+        
+            
         
     }
 }
