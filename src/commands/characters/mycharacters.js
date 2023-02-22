@@ -22,7 +22,6 @@ module.exports = {
       charStatus = "Primary";
       if (character.active == false) charStatus = "Inactive";
       returnString += `Name: **${charName}**\nRace: ${charRace}\nClass: ${charClass}\nStatus: _${charStatus}_\n\n`;
-      console.log(character);
       numCharacters++;
     }
     if (numCharacters == 0) {
