@@ -18,7 +18,6 @@ module.exports = {
       charName = character.displayName;
       charRace = character.race;
       charClass = character.class;
-      charRace = character.race;
       charStatus = "Primary";
       if (character.active == false) charStatus = "Inactive";
       returnString += `Name: **${charName}**\nRace: ${charRace}\nClass: ${charClass}\nStatus: _${charStatus}_\n\n`;

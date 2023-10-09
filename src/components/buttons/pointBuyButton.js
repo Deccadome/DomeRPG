@@ -266,6 +266,7 @@ module.exports = {
             content: `${activeChar.displayName} stats set:\n${stats}`,
             components: [],
           });
+          break;
         case "standardButton":
         case "rollButton":
         case "manualButton":
