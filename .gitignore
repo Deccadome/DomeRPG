@@ -1,3 +1,4 @@
 # Hide environment variables (not sharing tokens)
 .env
 src/commands/itemManager/test.js
+node_modules/
