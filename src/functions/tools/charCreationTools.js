@@ -21,7 +21,7 @@ module.exports = {
         );
       }
 
-      addedValues += values[i];
+      addedValues.push(values[i]);
     }
     return menu;
   },
