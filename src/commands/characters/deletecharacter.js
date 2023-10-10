@@ -2,9 +2,9 @@ const Character = require("../../schemas/character");
 const Tools = require("../../functions/tools/tools.js");
 const {
   SlashCommandBuilder,
-  SelectMenuBuilder,
+  StringSelectMenuBuilder,
   ActionRowBuilder,
-  SelectMenuOptionBuilder,
+  StringSelectMenuOptionBuilder,
   ComponentType,
   messageLink,
 } = require("discord.js");
@@ -60,16 +60,16 @@ module.exports = {
     if (!choices.length) {
       await interaction.reply({ content: `You don't have any characters.` });
     } else if (choices.includes(optionSlug)) {
-      const menu = new SelectMenuBuilder()
+      const menu = new StringSelectMenuBuilder()
         .setCustomId(`deleteCharacterConfirm`)
         .setMinValues(1)
         .setMaxValues(1)
         .setOptions(
-          new SelectMenuOptionBuilder({
+          new StringSelectMenuOptionBuilder({
             label: "Yes",
             value: option,
           }),
-          new SelectMenuOptionBuilder({
+          new StringSelectMenuOptionBuilder({
             label: "No",
             value: "no",
           })

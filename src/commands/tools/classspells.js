@@ -54,7 +54,6 @@ module.exports = {
     spellLevel = -1;
     if (interaction.options.getNumber("level") !== null) {
       spellLevel = interaction.options.getNumber("level");
-      embed.setDescription(`${getLevelSuffix(spellLevel)}`);
     }
     var cursor;
     if (spellLevel != -1) {
