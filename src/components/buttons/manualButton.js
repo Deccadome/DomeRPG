@@ -127,7 +127,7 @@ module.exports = {
     exit = false;
 
     await interaction.update({
-      content: `**Manual** - Set ability scores with no point limit.\nStrength: *${str}*\nDexterity: *${dex}*\nConstitution *${con}*\nIntelligence: *${int}*\nWisdom: *${wis}*\nCharisma: *${cha}*`,
+      content: `**Manual** - Set ability scores between 1 and 20.\nStrength: *${str}*\nDexterity: *${dex}*\nConstitution *${con}*\nIntelligence: *${int}*\nWisdom: *${wis}*\nCharisma: *${cha}*`,
       components: [buttonRow, statRow1, statRow2, statRow3, confirmRow],
     });
 
@@ -141,62 +141,62 @@ module.exports = {
         case "nRstrDec":
           str--;
           if (str == 1) strDec.setDisabled(true);
-          if (str == 19) strDec.setDisabled(false);
+          if (str == 19) strInc.setDisabled(false);
           break;
         case "nRstrInc":
           str++;
           if (str == 20) strInc.setDisabled(true);
-          if (str == 2) strInc.setDisabled(false);
+          if (str == 2) strDec.setDisabled(false);
           break;
         case "nRdexDec":
           dex--;
           if (dex == 1) dexDec.setDisabled(true);
-          if (dex == 19) dexDec.setDisabled(false);
+          if (dex == 19) dexInc.setDisabled(false);
           break;
         case "nRdexInc":
           dex++;
           if (dex == 20) dexInc.setDisabled(true);
-          if (dex == 2) dexInc.setDisabled(false);
+          if (dex == 2) dexDec.setDisabled(false);
           break;
         case "nRconDec":
           con--;
           if (con == 1) conDec.setDisabled(true);
-          if (con == 19) conDec.setDisabled(false);
+          if (con == 19) conInc.setDisabled(false);
           break;
         case "nRconInc":
           con++;
           if (con == 20) conInc.setDisabled(true);
-          if (con == 2) conInc.setDisabled(false);
+          if (con == 2) conDec.setDisabled(false);
           break;
         case "nRintDec":
           int--;
           if (int == 1) intDec.setDisabled(true);
-          if (int == 19) intDec.setDisabled(false);
+          if (int == 19) intInc.setDisabled(false);
           break;
         case "nRintInc":
           int++;
           if (int == 20) intInc.setDisabled(true);
-          if (int == 2) intInc.setDisabled(false);
+          if (int == 2) intDec.setDisabled(false);
           break;
         case "nRwisDec":
           wis--;
           if (wis == 1) wisDec.setDisabled(true);
-          if (wis == 19) wisDec.setDisabled(false);
+          if (wis == 19) wisInc.setDisabled(false);
           break;
         case "nRwisInc":
           wis++;
           if (wis == 20) wisInc.setDisabled(true);
-          if (wis == 2) wisInc.setDisabled(false);
+          if (wis == 2) wisDec.setDisabled(false);
           break;
         case "nRchaDec":
           cha--;
           if (cha == 1) chaDec.setDisabled(true);
-          if (cha == 19) chaDec.setDisabled(false);
+          if (cha == 19) chaInc.setDisabled(false);
           break;
         case "nRchaInc":
           cha++;
           if (cha == 20) chaInc.setDisabled(true);
-          if (cha == 2) chaInc.setDisabled(false);
+          if (cha == 2) chaDec.setDisabled(false);
           break;
         case "nRconfirmButton":
           activeChar = await Character.findOne({
@@ -222,7 +222,7 @@ module.exports = {
           break;
         case "standardButton":
         case "rollButton":
-        case "manualButton":
+        case "pointBuyButton":
           exit = true;
           collector.stop();
 
@@ -230,7 +230,7 @@ module.exports = {
       }
       if (!exit) {
         await i.update({
-          content: `**Manual** - Set ability scores with no point limit.\nStrength: *${str}*\nDexterity: *${dex}*\nConstitution *${con}*\nIntelligence: *${int}*\nWisdom: *${wis}*\nCharisma: *${cha}*`,
+          content: `**Manual** - Set ability scores between 1 and 20.\nStrength: *${str}*\nDexterity: *${dex}*\nConstitution *${con}*\nIntelligence: *${int}*\nWisdom: *${wis}*\nCharisma: *${cha}*`,
           components: [buttonRow, statRow1, statRow2, statRow3, confirmRow],
         });
       }

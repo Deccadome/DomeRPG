@@ -3,7 +3,7 @@ const {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
-  SelectMenuBuilder,
+  StringSelectMenuBuilder,
 } = require("discord.js");
 const {
   populateOptions,
@@ -13,7 +13,6 @@ const { removeByValue } = require("../../functions/tools/tools.js");
 const Character = require("../../schemas/character");
 const mongoose = require("mongoose");
 
-const INIT = -1;
 const STR = 0;
 const DEX = 1;
 const CON = 2;
@@ -55,40 +54,40 @@ module.exports = {
     scores = [15, 14, 13, 12, 10, 8];
     inputScores = [0, 0, 0, 0, 0, 0];
 
-    strMenu = new SelectMenuBuilder()
+    strMenu = new StringSelectMenuBuilder()
       .setCustomId(`nRstrMenu`)
-      .setPlaceholder("STRENGTH")
+      .setPlaceholder("STRENGTH (STR)")
       .setMinValues(1)
       .setMaxValues(1);
     strMenu = populateOptions(strMenu, scores);
 
-    dexMenu = new SelectMenuBuilder()
+    dexMenu = new StringSelectMenuBuilder()
       .setCustomId(`nRdexMenu`)
-      .setPlaceholder("DEXTERITY")
+      .setPlaceholder("DEXTERITY (DEX)")
       .setMinValues(1)
       .setMaxValues(1);
 
-    conMenu = new SelectMenuBuilder()
+    conMenu = new StringSelectMenuBuilder()
       .setCustomId(`nRconMenu`)
-      .setPlaceholder("CONSTITUTION")
+      .setPlaceholder("CONSTITUTION (CON)")
       .setMinValues(1)
       .setMaxValues(1);
 
-    intMenu = new SelectMenuBuilder()
+    intMenu = new StringSelectMenuBuilder()
       .setCustomId(`nRintMenu`)
-      .setPlaceholder("INTELLIGENCE")
+      .setPlaceholder("INTELLIGENCE (INT)")
       .setMinValues(1)
       .setMaxValues(1);
 
-    wisMenu = new SelectMenuBuilder()
+    wisMenu = new StringSelectMenuBuilder()
       .setCustomId(`nRwisMenu`)
-      .setPlaceholder("WISDOM")
+      .setPlaceholder("WISDOM (WIS)")
       .setMinValues(1)
       .setMaxValues(1);
 
-    chaMenu = new SelectMenuBuilder()
+    chaMenu = new StringSelectMenuBuilder()
       .setCustomId(`nRchaMenu`)
-      .setPlaceholder("CHARISMA")
+      .setPlaceholder("CHARISMA (CHA)")
       .setMinValues(1)
       .setMaxValues(1);
 
@@ -115,84 +114,91 @@ module.exports = {
       time: 300000,
     });
 
+    statList = "";
+
     collector.on("collect", async (i) => {
       if (i.user.id !== interaction.user.id) return;
-      //console.log(`Input Scores: ${inputScores}`);
       switch (i.customId) {
         case "nRstrMenu":
           inputScores[STR] = parseInt(i.values[0]);
           scores = removeByValue(scores, inputScores[STR]);
+          statList += `STR: ${inputScores[STR]}\n`;
 
           state = DEX;
           dexMenu = populateOptions(dexMenu, scores);
           scoreInputRow.setComponents([dexMenu]);
 
           await i.update({
-            content: `Strength set to ${inputScores[STR]}\n`,
+            content: statList,
             components: [scoreInputRow, confirmRow],
           });
           break;
         case "nRdexMenu":
           inputScores[DEX] = parseInt(i.values[0]);
           scores = removeByValue(scores, inputScores[DEX]);
+          statList += `DEX: ${inputScores[DEX]}\n`;
 
           state = CON;
           conMenu = populateOptions(conMenu, scores);
           scoreInputRow.setComponents([conMenu]);
 
           await i.update({
-            content: `Dexterity set to ${inputScores[DEX]}`,
+            content: statList,
             components: [scoreInputRow, confirmRow],
           });
           break;
         case "nRconMenu":
           inputScores[CON] = parseInt(i.values[0]);
           scores = removeByValue(scores, inputScores[CON]);
+          statList += `CON: ${inputScores[CON]}\n`;
 
           state = INT;
           intMenu = populateOptions(intMenu, scores);
           scoreInputRow.setComponents([intMenu]);
 
           await i.update({
-            content: `Constitution set to ${inputScores[CON]}`,
+            content: statList,
             components: [scoreInputRow, confirmRow],
           });
           break;
         case "nRintMenu":
           inputScores[INT] = parseInt(i.values[0]);
           scores = removeByValue(scores, inputScores[INT]);
+          statList += `INT: ${inputScores[INT]}\n`;
 
           state = WIS;
           wisMenu = populateOptions(wisMenu, scores);
           scoreInputRow.setComponents([wisMenu]);
 
           await i.update({
-            content: `Intelligence set to ${inputScores[INT]}`,
+            content: statList,
             components: [scoreInputRow, confirmRow],
           });
           break;
         case "nRwisMenu":
           inputScores[WIS] = parseInt(i.values[0]);
           scores = removeByValue(scores, inputScores[WIS]);
+          statList += `WIS: ${inputScores[WIS]}\n`;
 
           state = CHA;
           chaMenu = populateOptions(chaMenu, scores);
           scoreInputRow.setComponents([chaMenu]);
 
           await i.update({
-            content: `Wisdom set to ${inputScores[WIS]}`,
+            content: statList,
             components: [scoreInputRow, confirmRow],
           });
           break;
         case "nRchaMenu":
           inputScores[CHA] = parseInt(i.values[0]);
           scores = removeByValue(scores, inputScores[CHA]);
+          statList += `CHA: ${inputScores[CHA]}\n`;
 
           state = CONFIRM;
           confirmRow.addComponents(confirmButton);
 
           await i.update({
-            content: `Charisma set to ${inputScores[CHA]}.\n**Confirm Scores?**\nSTR: ${inputScores[STR]}\nDEX: ${inputScores[DEX]}\nCON: ${inputScores[CON]}\nINT: ${inputScores[INT]}\nWIS: ${inputScores[WIS]}\nCHA: ${inputScores[CHA]}`,
+            content: `${statList}**Confirm Scores?**`,
             components: [confirmRow],
           });
           break;
@@ -226,6 +232,7 @@ module.exports = {
                 scores.push(inputScores[STR]);
               }
               populateOptions(strMenu, scores);
+              statList = statList.replace(`STR: ${inputScores[STR]}\n`, "");
               scoreInputRow.setComponents([strMenu]);
               await i.update({
                 content: `**Standard** - Assign your scores from a fixed list (15, 14, 13, 12, 10, 8).`,
@@ -238,9 +245,10 @@ module.exports = {
                 scores.push(inputScores[DEX]);
               }
               populateOptions(dexMenu, scores);
+              statList = statList.replace(`DEX: ${inputScores[DEX]}\n`, "");
               scoreInputRow.setComponents([dexMenu]);
               await i.update({
-                content: `Strength (STR) set to ${inputScores[STR]}`,
+                content: statList,
                 components: [scoreInputRow, confirmRow],
               });
               state = DEX;
@@ -250,9 +258,10 @@ module.exports = {
                 scores.push(inputScores[CON]);
               }
               populateOptions(conMenu, scores);
+              statList = statList.replace(`CON: ${inputScores[CON]}\n`, "");
               scoreInputRow.setComponents([conMenu]);
               await i.update({
-                content: `Dexterity (DEX) set to ${inputScores[DEX]}`,
+                content: statList,
                 components: [scoreInputRow, confirmRow],
               });
               state = CON;
@@ -262,9 +271,10 @@ module.exports = {
                 scores.push(inputScores[INT]);
               }
               populateOptions(intMenu, scores);
+              statList = statList.replace(`INT: ${inputScores[INT]}\n`, "");
               scoreInputRow.setComponents([intMenu]);
               await i.update({
-                content: `Constitution (CON) set to ${inputScores[CON]}`,
+                content: statList,
                 components: [scoreInputRow, confirmRow],
               });
               state = INT;
@@ -274,9 +284,10 @@ module.exports = {
                 scores.push(inputScores[WIS]);
               }
               populateOptions(wisMenu, scores);
+              statList = statList.replace(`WIS: ${inputScores[WIS]}\n`, "");
               scoreInputRow.setComponents([wisMenu]);
               await i.update({
-                content: `Intelligence (INT) set to ${inputScores[INT]}`,
+                content: statList,
                 components: [scoreInputRow, confirmRow],
               });
               state = WIS;
@@ -286,9 +297,10 @@ module.exports = {
                 scores.push(inputScores[CHA]);
               }
               populateOptions(chaMenu, scores);
+              statList = statList.replace(`CHA: ${inputScores[CHA]}\n`, "");
               confirmRow.setComponents(backButton);
               await i.update({
-                content: `Wisdom (WIS) set to ${inputScores[WIS]}`,
+                content: statList,
                 components: [scoreInputRow, confirmRow],
               });
               state = CHA;
