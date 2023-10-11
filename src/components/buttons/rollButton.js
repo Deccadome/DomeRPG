@@ -8,6 +8,7 @@ const {
 const {
   populateOptions,
   getStats,
+  getModifier,
 } = require("../../functions/tools/charCreationTools.js");
 const { removeByValue, rollDie } = require("../../functions/tools/tools.js");
 const Character = require("../../schemas/character");
@@ -149,7 +150,9 @@ module.exports = {
         case "nRstrMenu":
           inputScores[STR] = parseInt(i.values[0]);
           scores = removeByValue(scores, inputScores[STR]);
-          statList += `STR: ${inputScores[STR]}\n`;
+          statList += `STR: ${inputScores[STR]} (${getModifier(
+            inputScores[STR]
+          )})\n`;
 
           state = DEX;
           dexMenu = populateOptions(dexMenu, scores);
@@ -163,7 +166,9 @@ module.exports = {
         case "nRdexMenu":
           inputScores[DEX] = parseInt(i.values[0]);
           scores = removeByValue(scores, inputScores[DEX]);
-          statList += `DEX: ${inputScores[DEX]}\n`;
+          statList += `DEX: ${inputScores[DEX]} (${getModifier(
+            inputScores[DEX]
+          )})\n`;
 
           state = CON;
           conMenu = populateOptions(conMenu, scores);
@@ -177,7 +182,9 @@ module.exports = {
         case "nRconMenu":
           inputScores[CON] = parseInt(i.values[0]);
           scores = removeByValue(scores, inputScores[CON]);
-          statList += `CON: ${inputScores[CON]}\n`;
+          statList += `CON: ${inputScores[CON]} (${getModifier(
+            inputScores[CON]
+          )})\n`;
 
           state = INT;
           intMenu = populateOptions(intMenu, scores);
@@ -191,7 +198,9 @@ module.exports = {
         case "nRintMenu":
           inputScores[INT] = parseInt(i.values[0]);
           scores = removeByValue(scores, inputScores[INT]);
-          statList += `INT: ${inputScores[INT]}\n`;
+          statList += `INT: ${inputScores[INT]} (${getModifier(
+            inputScores[INT]
+          )})\n`;
 
           state = WIS;
           wisMenu = populateOptions(wisMenu, scores);
@@ -205,7 +214,9 @@ module.exports = {
         case "nRwisMenu":
           inputScores[WIS] = parseInt(i.values[0]);
           scores = removeByValue(scores, inputScores[WIS]);
-          statList += `WIS: ${inputScores[WIS]}\n`;
+          statList += `WIS: ${inputScores[WIS]} (${getModifier(
+            inputScores[WIS]
+          )})\n`;
 
           state = CHA;
           chaMenu = populateOptions(chaMenu, scores);
@@ -219,7 +230,9 @@ module.exports = {
         case "nRchaMenu":
           inputScores[CHA] = parseInt(i.values[0]);
           scores = removeByValue(scores, inputScores[CHA]);
-          statList += `CHA: ${inputScores[CHA]}\n`;
+          statList += `CHA: ${inputScores[CHA]} (${getModifier(
+            inputScores[CHA]
+          )})\n`;
 
           state = CONFIRM;
           confirmRow.addComponents(confirmButton);
@@ -264,7 +277,10 @@ module.exports = {
             case DEX:
               scores.push(inputScores[STR]);
               populateOptions(strMenu, scores);
-              statList = statList.replace(`STR: ${inputScores[STR]}\n`, "");
+              statList = statList.replace(
+                `STR: ${inputScores[STR]} (${getModifier(inputScores[STR])})\n`,
+                ""
+              );
               scoreInputRow.setComponents([strMenu]);
               await i.update({
                 content: `Rolled scores: ${scores}\n\n${statList}`,
@@ -275,7 +291,10 @@ module.exports = {
             case CON:
               scores.push(inputScores[DEX]);
               populateOptions(dexMenu, scores);
-              statList = statList.replace(`DEX: ${inputScores[DEX]}\n`, "");
+              statList = statList.replace(
+                `DEX: ${inputScores[DEX]} (${getModifier(inputScores[DEX])})\n`,
+                ""
+              );
               scoreInputRow.setComponents([dexMenu]);
               await i.update({
                 content: `Rolled scores: ${scores}\n\n${statList}`,
@@ -286,7 +305,10 @@ module.exports = {
             case INT:
               scores.push(inputScores[CON]);
               populateOptions(conMenu, scores);
-              statList = statList.replace(`CON: ${inputScores[CON]}\n`, "");
+              statList = statList.replace(
+                `CON: ${inputScores[CON]} (${getModifier(inputScores[CON])})\n`,
+                ""
+              );
               scoreInputRow.setComponents([conMenu]);
               await i.update({
                 content: `Rolled scores: ${scores}\n\n${statList}`,
@@ -297,7 +319,10 @@ module.exports = {
             case WIS:
               scores.push(inputScores[INT]);
               populateOptions(intMenu, scores);
-              statList = statList.replace(`INT: ${inputScores[INT]}\n`, "");
+              statList = statList.replace(
+                `INT: ${inputScores[INT]} (${getModifier(inputScores[INT])})\n`,
+                ""
+              );
               scoreInputRow.setComponents([intMenu]);
               await i.update({
                 content: `Rolled scores: ${scores}\n\n${statList}`,
@@ -308,7 +333,10 @@ module.exports = {
             case CHA:
               scores.push(inputScores[WIS]);
               populateOptions(wisMenu, scores);
-              statList = statList.replace(`WIS: ${inputScores[WIS]}\n`, "");
+              statList = statList.replace(
+                `WIS: ${inputScores[WIS]} (${getModifier(inputScores[WIS])})\n`,
+                ""
+              );
               scoreInputRow.setComponents([wisMenu]);
               await i.update({
                 content: `Rolled scores: ${scores}\n\n${statList}`,
@@ -319,7 +347,10 @@ module.exports = {
             case CONFIRM:
               scores.push(inputScores[CHA]);
               populateOptions(chaMenu, scores);
-              statList = statList.replace(`CHA: ${inputScores[CHA]}\n`, "");
+              statList = statList.replace(
+                `CHA: ${inputScores[CHA]} (${getModifier(inputScores[CHA])})\n`,
+                ""
+              );
               confirmRow.setComponents(backButton);
               await i.update({
                 content: `Rolled scores: ${scores}\n\n${statList}`,

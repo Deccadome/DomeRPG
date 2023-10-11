@@ -2,7 +2,10 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 const Character = require("../../schemas/character");
 const mongoose = require("mongoose");
-const { getStats } = require("../../functions/tools/charCreationTools");
+const {
+  getStats,
+  getModifier,
+} = require("../../functions/tools/charCreationTools");
 
 module.exports = {
   data: {
@@ -123,15 +126,26 @@ module.exports = {
     int = 8;
     wis = 8;
     cha = 8;
-    exit = false;
 
-    await interaction.update({
-      content: `**Point Buy** - Spend up to 27 points on Ability Scores\n\nPoints Remaining: **${pointsRemaining}**\nStrength: *${str}*\nDexterity: *${dex}*\nConstitution *${con}*\nIntelligence: *${int}*\nWisdom: *${wis}*\nCharisma: *${cha}*`,
-      components: [buttonRow, statRow1, statRow2, statRow3, confirmRow],
-    });
+    var exit = false;
 
     const collector = interaction.channel.createMessageComponentCollector({
       time: 300000,
+    });
+
+    await interaction.update({
+      content: `**Point Buy** - Spend up to 27 points on Ability Scores\n\nPoints Remaining: **${pointsRemaining}**\n\nStrength: *${str}* (${getModifier(
+        str
+      )})\nDexterity: *${dex}* (${getModifier(
+        dex
+      )})\nConstitution *${con}* (${getModifier(
+        con
+      )})\nIntelligence: *${int}* (${getModifier(
+        int
+      )})\nWisdom: *${wis}* (${getModifier(
+        wis
+      )})\nCharisma: *${cha}* (${getModifier(cha)})`,
+      components: [buttonRow, statRow1, statRow2, statRow3, confirmRow],
     });
 
     collector.on("collect", async (i) => {
@@ -272,6 +286,7 @@ module.exports = {
         case "manualButton":
           exit = true;
           collector.stop();
+          break;
         default:
       }
       if (pointsRemaining == 0) {
@@ -295,16 +310,26 @@ module.exports = {
         if (cha >= 13) chaInc.setDisabled(true);
         else chaInc.setDisabled(false);
       } else if (pointsRemaining == 2) {
-        if (str > 15) strInc.setDisabled(false);
-        if (dex > 15) dexInc.setDisabled(false);
-        if (con > 15) conInc.setDisabled(false);
-        if (int > 15) intInc.setDisabled(false);
-        if (wis > 15) wisInc.setDisabled(false);
-        if (cha > 15) chaInc.setDisabled(false);
+        if (str < 15) strInc.setDisabled(false);
+        if (dex < 15) dexInc.setDisabled(false);
+        if (con < 15) conInc.setDisabled(false);
+        if (int < 15) intInc.setDisabled(false);
+        if (wis < 15) wisInc.setDisabled(false);
+        if (cha < 15) chaInc.setDisabled(false);
       }
       if (!exit) {
         await i.update({
-          content: `**Point Buy** - Spend up to 27 points on Ability Scores\n\nPoints Remaining: **${pointsRemaining}**\nStrength: *${str}*\nDexterity: *${dex}*\nConstitution *${con}*\nIntelligence: *${int}*\nWisdom: *${wis}*\nCharisma: *${cha}*`,
+          content: `**Point Buy** - Spend up to 27 points on Ability Scores\n\nPoints Remaining: **${pointsRemaining}**\n\nStrength: *${str}* (${getModifier(
+            str
+          )})\nDexterity: *${dex}* (${getModifier(
+            dex
+          )})\nConstitution *${con}* (${getModifier(
+            con
+          )})\nIntelligence: *${int}* (${getModifier(
+            int
+          )})\nWisdom: *${wis}* (${getModifier(
+            wis
+          )})\nCharisma: *${cha}* (${getModifier(cha)})`,
           components: [buttonRow, statRow1, statRow2, statRow3, confirmRow],
         });
       }

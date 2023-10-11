@@ -2,7 +2,10 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 const Character = require("../../schemas/character");
 const mongoose = require("mongoose");
-const { getStats } = require("../../functions/tools/charCreationTools");
+const {
+  getStats,
+  getModifier,
+} = require("../../functions/tools/charCreationTools");
 
 module.exports = {
   data: {
@@ -124,15 +127,25 @@ module.exports = {
     wis = 8;
     cha = 8;
 
-    exit = false;
-
-    await interaction.update({
-      content: `**Manual** - Set ability scores between 1 and 20.\nStrength: *${str}*\nDexterity: *${dex}*\nConstitution *${con}*\nIntelligence: *${int}*\nWisdom: *${wis}*\nCharisma: *${cha}*`,
-      components: [buttonRow, statRow1, statRow2, statRow3, confirmRow],
-    });
+    var exit = false;
 
     const collector = interaction.channel.createMessageComponentCollector({
       time: 300000,
+    });
+
+    await interaction.update({
+      content: `**Manual** - Set ability scores between 1 and 20.\n\nStrength: *${str}* (${getModifier(
+        str
+      )})\nDexterity: *${dex}* (${getModifier(
+        dex
+      )})\nConstitution *${con}* (${getModifier(
+        con
+      )})\nIntelligence: *${int}* (${getModifier(
+        int
+      )})\nWisdom: *${wis}* (${getModifier(
+        wis
+      )})\nCharisma: *${cha}* (${getModifier(cha)})`,
+      components: [buttonRow, statRow1, statRow2, statRow3, confirmRow],
     });
 
     collector.on("collect", async (i) => {
@@ -230,7 +243,17 @@ module.exports = {
       }
       if (!exit) {
         await i.update({
-          content: `**Manual** - Set ability scores between 1 and 20.\nStrength: *${str}*\nDexterity: *${dex}*\nConstitution *${con}*\nIntelligence: *${int}*\nWisdom: *${wis}*\nCharisma: *${cha}*`,
+          content: `**Manual** - Set ability scores between 1 and 20.\n\nStrength: *${str}* (${getModifier(
+            str
+          )})\nDexterity: *${dex}* (${getModifier(
+            dex
+          )})\nConstitution *${con}* (${getModifier(
+            con
+          )})\nIntelligence: *${int}* (${getModifier(
+            int
+          )})\nWisdom: *${wis}* (${getModifier(
+            wis
+          )})\nCharisma: *${cha}* (${getModifier(cha)})`,
           components: [buttonRow, statRow1, statRow2, statRow3, confirmRow],
         });
       }

@@ -8,6 +8,7 @@ const {
 const {
   populateOptions,
   getStats,
+  getModifier,
 } = require("../../functions/tools/charCreationTools.js");
 const { removeByValue } = require("../../functions/tools/tools.js");
 const Character = require("../../schemas/character");
@@ -105,7 +106,7 @@ module.exports = {
     const confirmRow = new ActionRowBuilder().addComponents([backButton]);
 
     await interaction.update({
-      content: `**Standard** - Assign your scores from a fixed list (15, 14, 13, 12, 10, 8).`,
+      content: `**Standard Array** - Assign your scores from a fixed list (15, 14, 13, 12, 10, 8).`,
       components: [methodButtonRow, scoreInputRow],
     });
 
@@ -122,77 +123,89 @@ module.exports = {
         case "nRstrMenu":
           inputScores[STR] = parseInt(i.values[0]);
           scores = removeByValue(scores, inputScores[STR]);
-          statList += `STR: ${inputScores[STR]}\n`;
+          statList += `STR: ${inputScores[STR]} (${getModifier(
+            inputScores[STR]
+          )})\n`;
 
           state = DEX;
           dexMenu = populateOptions(dexMenu, scores);
           scoreInputRow.setComponents([dexMenu]);
 
           await i.update({
-            content: statList,
+            content: `Remaining scores: ${scores}\n\n${statList}`,
             components: [scoreInputRow, confirmRow],
           });
           break;
         case "nRdexMenu":
           inputScores[DEX] = parseInt(i.values[0]);
           scores = removeByValue(scores, inputScores[DEX]);
-          statList += `DEX: ${inputScores[DEX]}\n`;
+          statList += `DEX: ${inputScores[DEX]} (${getModifier(
+            inputScores[DEX]
+          )})\n`;
 
           state = CON;
           conMenu = populateOptions(conMenu, scores);
           scoreInputRow.setComponents([conMenu]);
 
           await i.update({
-            content: statList,
+            content: `Remaining scores: ${scores}\n\n${statList}`,
             components: [scoreInputRow, confirmRow],
           });
           break;
         case "nRconMenu":
           inputScores[CON] = parseInt(i.values[0]);
           scores = removeByValue(scores, inputScores[CON]);
-          statList += `CON: ${inputScores[CON]}\n`;
+          statList += `CON: ${inputScores[CON]} (${getModifier(
+            inputScores[CON]
+          )})\n`;
 
           state = INT;
           intMenu = populateOptions(intMenu, scores);
           scoreInputRow.setComponents([intMenu]);
 
           await i.update({
-            content: statList,
+            content: `Remaining scores: ${scores}\n\n${statList}`,
             components: [scoreInputRow, confirmRow],
           });
           break;
         case "nRintMenu":
           inputScores[INT] = parseInt(i.values[0]);
           scores = removeByValue(scores, inputScores[INT]);
-          statList += `INT: ${inputScores[INT]}\n`;
+          statList += `INT: ${inputScores[INT]} (${getModifier(
+            inputScores[INT]
+          )})\n`;
 
           state = WIS;
           wisMenu = populateOptions(wisMenu, scores);
           scoreInputRow.setComponents([wisMenu]);
 
           await i.update({
-            content: statList,
+            content: `Remaining scores: ${scores}\n\n${statList}`,
             components: [scoreInputRow, confirmRow],
           });
           break;
         case "nRwisMenu":
           inputScores[WIS] = parseInt(i.values[0]);
           scores = removeByValue(scores, inputScores[WIS]);
-          statList += `WIS: ${inputScores[WIS]}\n`;
+          statList += `WIS: ${inputScores[WIS]} (${getModifier(
+            inputScores[WIS]
+          )})\n`;
 
           state = CHA;
           chaMenu = populateOptions(chaMenu, scores);
           scoreInputRow.setComponents([chaMenu]);
 
           await i.update({
-            content: statList,
+            content: `Remaining scores: ${scores}\n\n${statList}`,
             components: [scoreInputRow, confirmRow],
           });
           break;
         case "nRchaMenu":
           inputScores[CHA] = parseInt(i.values[0]);
           scores = removeByValue(scores, inputScores[CHA]);
-          statList += `CHA: ${inputScores[CHA]}\n`;
+          statList += `CHA: ${inputScores[CHA]} (${getModifier(
+            inputScores[CHA]
+          )})\n`;
 
           state = CONFIRM;
           confirmRow.addComponents(confirmButton);
@@ -232,10 +245,13 @@ module.exports = {
                 scores.push(inputScores[STR]);
               }
               populateOptions(strMenu, scores);
-              statList = statList.replace(`STR: ${inputScores[STR]}\n`, "");
+              statList = statList.replace(
+                `STR: ${inputScores[STR]} (${getModifier(inputScores[STR])})\n`,
+                ""
+              );
               scoreInputRow.setComponents([strMenu]);
               await i.update({
-                content: `**Standard** - Assign your scores from a fixed list (15, 14, 13, 12, 10, 8).`,
+                content: `**Standard Array** - Assign your scores from a fixed list (15, 14, 13, 12, 10, 8).`,
                 components: [methodButtonRow, scoreInputRow],
               });
               state = STR;
@@ -245,10 +261,13 @@ module.exports = {
                 scores.push(inputScores[DEX]);
               }
               populateOptions(dexMenu, scores);
-              statList = statList.replace(`DEX: ${inputScores[DEX]}\n`, "");
+              statList = statList.replace(
+                `DEX: ${inputScores[DEX]} (${getModifier(inputScores[DEX])})\n`,
+                ""
+              );
               scoreInputRow.setComponents([dexMenu]);
               await i.update({
-                content: statList,
+                content: `Remaining scores: ${scores}\n\n${statList}`,
                 components: [scoreInputRow, confirmRow],
               });
               state = DEX;
@@ -258,10 +277,13 @@ module.exports = {
                 scores.push(inputScores[CON]);
               }
               populateOptions(conMenu, scores);
-              statList = statList.replace(`CON: ${inputScores[CON]}\n`, "");
+              statList = statList.replace(
+                `CON: ${inputScores[CON]} (${getModifier(inputScores[CON])})\n`,
+                ""
+              );
               scoreInputRow.setComponents([conMenu]);
               await i.update({
-                content: statList,
+                content: `Remaining scores: ${scores}\n\n${statList}`,
                 components: [scoreInputRow, confirmRow],
               });
               state = CON;
@@ -271,10 +293,13 @@ module.exports = {
                 scores.push(inputScores[INT]);
               }
               populateOptions(intMenu, scores);
-              statList = statList.replace(`INT: ${inputScores[INT]}\n`, "");
+              statList = statList.replace(
+                `INT: ${inputScores[INT]} (${getModifier(inputScores[INT])})\n`,
+                ""
+              );
               scoreInputRow.setComponents([intMenu]);
               await i.update({
-                content: statList,
+                content: `Remaining scores: ${scores}\n\n${statList}`,
                 components: [scoreInputRow, confirmRow],
               });
               state = INT;
@@ -284,10 +309,13 @@ module.exports = {
                 scores.push(inputScores[WIS]);
               }
               populateOptions(wisMenu, scores);
-              statList = statList.replace(`WIS: ${inputScores[WIS]}\n`, "");
+              statList = statList.replace(
+                `WIS: ${inputScores[WIS]} (${getModifier(inputScores[WIS])})\n`,
+                ""
+              );
               scoreInputRow.setComponents([wisMenu]);
               await i.update({
-                content: statList,
+                content: `Remaining scores: ${scores}\n\n${statList}`,
                 components: [scoreInputRow, confirmRow],
               });
               state = WIS;
@@ -297,10 +325,13 @@ module.exports = {
                 scores.push(inputScores[CHA]);
               }
               populateOptions(chaMenu, scores);
-              statList = statList.replace(`CHA: ${inputScores[CHA]}\n`, "");
+              statList = statList.replace(
+                `CHA: ${inputScores[CHA]} (${getModifier(inputScores[CHA])})\n`,
+                ""
+              );
               confirmRow.setComponents(backButton);
               await i.update({
-                content: statList,
+                content: `Remaining scores: ${scores}\n\n${statList}`,
                 components: [scoreInputRow, confirmRow],
               });
               state = CHA;
